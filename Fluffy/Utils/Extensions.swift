@@ -20,3 +20,25 @@ extension Color {
     static let forecastCardBackground = Color("Forecast Card Background")
     static let probabilityText = Color("Probability Text")
 }
+
+extension View {
+    func makeBlurView(radius: CGFloat = 0, opaque: Bool = false) -> some View {
+        self
+            .background(BlurView(radius: radius, opaque: opaque))
+    }
+}
+
+extension View {
+    func innerShadow<S: Shape, SS: ShapeStyle>(shape: S, color: SS, lineWidth: CGFloat = 1, offsetX: CGFloat = 0, offsetY: CGFloat = 0, blur: CGFloat = 4, blendMode: BlendMode = .normal, opacity: Double = 1) -> some View {
+        return self
+            .overlay(content: {
+                shape
+                    .stroke(color, lineWidth: lineWidth)
+                    .blendMode(blendMode)
+                    .offset(x: offsetX,y: offsetY)
+                    .blur(radius: blur)
+                    .mask(shape)
+                    .opacity(opacity)
+            })
+    }
+}

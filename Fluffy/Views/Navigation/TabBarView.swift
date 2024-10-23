@@ -10,7 +10,6 @@ import SwiftUI
 struct TabBarView: View {
     
     var navButtonTapped   : (() -> Void)? = nil
-    var listButtonTapped  : (() -> Void)? = nil
     
     var body: some View {
         ZStack {
