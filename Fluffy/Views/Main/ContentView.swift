@@ -62,7 +62,7 @@ struct ContentView: View {
                 BottomSheetView(position: $bottomSheetPosition) {
                     
                 } content: {
-                    ForecastView()
+                    ForecastView(bottomSheetTranslationProrated: bottomSheetTranslationProrated)
                 }
                 
                 .onBottomSheetDrag { translation in

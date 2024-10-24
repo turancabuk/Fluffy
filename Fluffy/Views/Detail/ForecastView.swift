@@ -8,9 +8,15 @@
 import SwiftUI
 
 struct ForecastView: View {
+    
+    var bottomSheetTranslationProrated : CGFloat = 1
+    @State private var selection       = 0
+    
     var body: some View {
         ScrollView {
-            
+            VStack(spacing: 20) {
+                SegmentedControlView(selection: $selection)
+            }
         }
         .makeBlurView(radius: 25, opaque: true)
         .background(Color.bottomSheetBackground)
@@ -23,7 +29,7 @@ struct ForecastView: View {
             offsetY: 1,
             blur: 0,
             blendMode: .overlay,
-            opacity: 1
+            opacity: 1 - bottomSheetTranslationProrated
         )
         .overlay {
             Divider()
