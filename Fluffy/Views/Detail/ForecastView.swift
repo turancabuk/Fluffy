@@ -14,9 +14,27 @@ struct ForecastView: View {
     
     var body: some View {
         ScrollView {
-            VStack(spacing: 20) {
+            VStack {
                 SegmentedControlView(selection: $selection)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        if selection == 0 {
+                            ForEach(Forecast.hourly) { forecasts in
+                                ForecastCardView(forecast: forecasts, forecastPeriod: .hourly)
+                            }
+                            .transition(.offset(x: -430))
+                        }else{
+                            ForEach(Forecast.daily) { foreacasts in
+                                ForecastCardView(forecast: foreacasts, forecastPeriod: .daily)
+                            }
+                            .transition(.offset(x: 430))
+                        }
+                    }
+                    .padding(.vertical, 20)
+                }
+                .padding(.horizontal, 20)
             }
+            Image("Forecast Widgets")
         }
         .makeBlurView(radius: 25, opaque: true)
         .background(Color.bottomSheetBackground)
