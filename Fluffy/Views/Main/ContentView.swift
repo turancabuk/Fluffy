@@ -15,6 +15,8 @@ enum BottomSheetPosition: CGFloat, CaseIterable {
 
 struct ContentView: View {
     
+    private var locationManager         = LocationManager()
+    @StateObject private var viewmodel  = ContentViewModel(locationManager: LocationManager())
     @State var bottomSheetPosition      : BottomSheetPosition = .middle
     @State var bottomSheetTranslation   : CGFloat = BottomSheetPosition.middle.rawValue
     @State var hasDragged               : Bool = false
@@ -47,9 +49,14 @@ struct ContentView: View {
                         VStack {
                             Text(attributedString)
                             
-                            Text("H:24°   L:18°")
-                                .font(.title3.weight(.semibold))
-                                .opacity(1 - bottomSheetTranslationProrated)
+                            if let daily = viewmodel.dailyWeather?.first {
+                                let dailyMin = Int(daily.temp.min)
+                                let dailyMax = Int(daily.temp.max)
+                                
+                                Text("H: \(dailyMax)°   L: \(dailyMin)°")
+                                    .font(.title3.weight(.semibold))
+                                    .opacity(1 - bottomSheetTranslationProrated)
+                            }
                         }
                         
                         Spacer()
@@ -62,7 +69,7 @@ struct ContentView: View {
                 BottomSheetView(position: $bottomSheetPosition) {
                     
                 } content: {
-                    ForecastView(bottomSheetTranslationProrated: bottomSheetTranslationProrated)
+//                    ForecastView(bottomSheetTranslationProrated: bottomSheetTranslationProrated)
                 }
                 
                 .onBottomSheetDrag { translation in
@@ -78,12 +85,23 @@ struct ContentView: View {
                 .offset(y: bottomSheetTranslationProrated * 115)
             }
         }
+        .onAppear {
+            viewmodel.locationManager.requestLocation()
+        }
+        .task {
+            await viewmodel.getCurrentWeather()
+            await viewmodel.getDailyWeather()
+        }
         .navigationBarHidden(true)
     }
     private var attributedString: AttributedString {
-         var string = AttributedString("19°" + (hasDragged ? " | " : "\n ") + "Mostly Clear")
-         
-         if let temp = string.range(of: "19°") {
+        guard let currentWeather = viewmodel.currentWeather else { return AttributedString() }
+        let roundedTemp = Int(currentWeather.temp)
+        let weatherDescription = currentWeather.weather.first?.description
+        
+        var string = AttributedString("\(roundedTemp)°" + (hasDragged ? " | " : "\n ") + "\(weatherDescription ?? "")")
+
+        if let temp = string.range(of: "\(roundedTemp)°") {
              string[temp].font = .system(size: (96 - (bottomSheetTranslationProrated * (96 - 20))), weight: hasDragged ? .semibold : .thin)
              string[temp].foregroundColor = hasDragged ? .secondary : .primary
          }
@@ -93,11 +111,10 @@ struct ContentView: View {
              string[pipe].foregroundColor = .secondary.opacity(bottomSheetTranslationProrated)
          }
          
-         if let weather = string.range(of: "Mostly Clear") {
+        if let weather = string.range(of: "\(weatherDescription ?? "")") {
              string[weather].font = .title3.weight(.semibold)
              string[weather].foregroundColor = .secondary
          }
-         
          return string
      }
 }
@@ -107,4 +124,3 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
 }
 
-//                                        string[temp].f fontWeight(hasDragged ? .semibold : .thin))

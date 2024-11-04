@@ -14,7 +14,7 @@ struct TabBarView: View {
     var body: some View {
         ZStack {
             Arc()
-                .fill(Color.tabBarBackground)
+                .fill(Color.background1)
                 .frame(height: 88)
                 .overlay {
                     Arc()
@@ -29,7 +29,7 @@ struct TabBarView: View {
                 }
                 Spacer()
                 NavigationLink {
-                    ForecastView()
+//                    WeatherView()
                 } label: {
                     Image(systemName: "list.star")
                         .frame(width: 44, height: 44)
