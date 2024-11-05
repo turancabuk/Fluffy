@@ -10,9 +10,9 @@ import SwiftUI
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
-    @Published var location     : CLLocation?
-    @Published var isAuthorized = false
-    private let manager         = CLLocationManager()
+    @Published var location      : CLLocation?
+    @Published var isAuthorized  = false
+    private let manager          = CLLocationManager()
 
     override init() {
         super.init()

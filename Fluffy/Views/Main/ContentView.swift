@@ -15,7 +15,6 @@ enum BottomSheetPosition: CGFloat, CaseIterable {
 
 struct ContentView: View {
     
-    private var locationManager         = LocationManager()
     @StateObject private var viewmodel  = ContentViewModel(locationManager: LocationManager())
     @State var bottomSheetPosition      : BottomSheetPosition = .middle
     @State var bottomSheetTranslation   : CGFloat = BottomSheetPosition.middle.rawValue
@@ -42,16 +41,21 @@ struct ContentView: View {
                         .offset(y: -bottomSheetTranslationProrated * imageOffset)
                     
                     // MARK: Current Weather
-                    VStack(spacing: -10 * (1 - bottomSheetTranslationProrated)) {
-                        Text("Yozgat")
+                    VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
+                        
+                        Text("\(viewmodel.cityLocation)")
                             .font(.largeTitle)
                         
                         VStack {
                             Text(attributedString)
                             
                             if let daily = viewmodel.dailyWeather?.first {
-                                let dailyMin = Int(daily.temp.min)
-                                let dailyMax = Int(daily.temp.max)
+                                let dailyMax  = Int(daily.temp.max.rounded(.toNearestOrAwayFromZero))
+                                let dailyMin  = Int(daily.temp.min.rounded(.toNearestOrAwayFromZero))
+                                let feelsLike = Int(viewmodel.currentWeather?.feelsLike.rounded(.toNearestOrAwayFromZero) ?? 0)
+                                
+                                Text("Hissedilen: \(feelsLike)°")
+                                    .opacity(1 - bottomSheetTranslationProrated)
                                 
                                 Text("H: \(dailyMax)°   L: \(dailyMin)°")
                                     .font(.title3.weight(.semibold))
@@ -69,7 +73,7 @@ struct ContentView: View {
                 BottomSheetView(position: $bottomSheetPosition) {
                     
                 } content: {
-//                    ForecastView(bottomSheetTranslationProrated: bottomSheetTranslationProrated)
+                    ForecastView(viewModel: ContentViewModel(locationManager: LocationManager()), bottomSheetTranslationProrated: 1)
                 }
                 
                 .onBottomSheetDrag { translation in
@@ -85,9 +89,6 @@ struct ContentView: View {
                 .offset(y: bottomSheetTranslationProrated * 115)
             }
         }
-        .onAppear {
-            viewmodel.locationManager.requestLocation()
-        }
         .task {
             await viewmodel.getCurrentWeather()
             await viewmodel.getDailyWeather()
@@ -96,7 +97,7 @@ struct ContentView: View {
     }
     private var attributedString: AttributedString {
         guard let currentWeather = viewmodel.currentWeather else { return AttributedString() }
-        let roundedTemp = Int(currentWeather.temp)
+        let roundedTemp = Int(currentWeather.temp.rounded(.toNearestOrAwayFromZero))
         let weatherDescription = currentWeather.weather.first?.description
         
         var string = AttributedString("\(roundedTemp)°" + (hasDragged ? " | " : "\n ") + "\(weatherDescription ?? "")")

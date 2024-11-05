@@ -6,7 +6,11 @@
 
 import Foundation
 
-// MARK: - Welcome
+enum ForecastPeriod {
+    case hourly
+    case daily
+}
+
 struct Welcome: Codable {
     let lat, lon: Double
     let timezone: String
@@ -20,10 +24,21 @@ struct Welcome: Codable {
         case timezoneOffset = "timezone_offset"
         case current, hourly, daily
     }
+
+    // Segmented control yardımıyla saatlik veya günlük veriyi dönecek bir fonksiyon
+    func forecastData(for period: ForecastPeriod) -> [any Identifiable] {
+        switch period {
+        case .hourly:
+            return hourly
+        case .daily:
+            return daily
+        }
+    }
 }
 
 // MARK: - Current
-struct Current: Codable {
+struct Current: Codable, Identifiable {
+    var id: UUID = UUID()
     let dt: Int
     let sunrise, sunset: Int?
     let temp, feelsLike: Double
@@ -35,6 +50,9 @@ struct Current: Codable {
     let windGust: Double?
     let weather: [Weather]
     let pop: Double?
+    var date: Date {
+        Date(timeIntervalSince1970: TimeInterval(dt))
+    }
 
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, temp
@@ -57,8 +75,27 @@ struct Weather: Codable {
     let icon: String
 }
 
+
+enum Icon: String, Codable {
+    case the01D = "Moon"
+    case the01N = "Cloud"
+    case the02N = "Moon cloud mid rain"
+    case the03D = "Sun cloud angled rain"
+    case the03N = "Sun"
+    case the04D = "Tornado"
+    case the10D = "Moon cloud fast wind"
+}
+
+
+enum Main: String, Codable {
+    case clear = "Clear"
+    case clouds = "Clouds"
+    case rain = "Rain"
+}
+
 // MARK: - Daily
-struct Daily: Codable {
+struct Daily: Codable, Identifiable {
+    var id: UUID = UUID()
     let dt, sunrise, sunset, moonrise: Int
     let moonset: Int
     let moonPhase: Double
@@ -72,7 +109,9 @@ struct Daily: Codable {
     let clouds: Int
     let pop: Double?
     let uvi: Double
-
+    var date: Date {
+        Date(timeIntervalSince1970: TimeInterval(dt))
+    }
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, moonrise, moonset
         case moonPhase = "moon_phase"
