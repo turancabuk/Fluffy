@@ -70,11 +70,6 @@ struct ForecastView: View {
     }
 }
 
-// Preview example with a mock ContentViewModel
 #Preview {
-    let mockLocationManager = LocationManager()
-    let mockViewModel = ContentViewModel(locationManager: mockLocationManager)
-    ForecastView(viewModel: mockViewModel)
-        .background(Color.background)
-        .preferredColorScheme(.dark)
+    ForecastView(viewModel: ContentViewModel(locationManager: LocationManager()))
 }

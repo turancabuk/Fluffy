@@ -26,9 +26,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
+        guard let newLocation = locations.last else { return }
+        if let currentLocation = location, currentLocation.distance(from: newLocation) < 100 {
+            return
+        }
         DispatchQueue.main.async {
-            self.location = location
+            self.location = newLocation
         }
         manager.stopUpdatingLocation()
     }

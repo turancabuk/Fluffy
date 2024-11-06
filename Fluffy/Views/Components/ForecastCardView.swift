@@ -45,7 +45,7 @@ struct ForecastCardView: View {
 
             VStack(spacing: 16) {
                 if forecastPeriod == .hourly, let currentWeather = currentWeather {
-                    Text(currentWeather.date, format: .dateTime.hour())
+                    Text("\(currentWeather.date, format: .dateTime.hour()):00")
                         .font(.subheadline.weight(.semibold))
                     VStack(spacing: -4) {
                         Image("\(currentWeather.weather.first?.icon ?? "defaultIcon") small")

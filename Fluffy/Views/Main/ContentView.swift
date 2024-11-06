@@ -84,14 +84,11 @@ struct ContentView: View {
                 }
                 
                 TabBarView(navButtonTapped: {
-                    
+                    viewmodel.locationManager.requestLocation()
+                    print("reques taped")
                 })
                 .offset(y: bottomSheetTranslationProrated * 115)
             }
-        }
-        .task {
-            await viewmodel.getCurrentWeather()
-            await viewmodel.getDailyWeather()
         }
         .navigationBarHidden(true)
     }

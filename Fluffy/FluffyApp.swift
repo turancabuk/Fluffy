@@ -11,12 +11,16 @@ import SwiftUI
 struct FluffyApp: App {
     let persistenceController = PersistenceController.shared
     @StateObject var locationManager   = LocationManager()
-
+    @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore = false
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .onAppear {
-                    locationManager.requestLocation()
+                    if !hasLaunchedBefore {
+                        locationManager.requestLocation()
+                        hasLaunchedBefore = true
+                    }
                 }
                 .environmentObject(locationManager)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
