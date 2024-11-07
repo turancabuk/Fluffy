@@ -11,67 +11,42 @@ import Combine
 
 class ContentViewModel: ObservableObject {
     
+    static let shared = ContentViewModel(locationManager: LocationManager.shared)
     @ObservedObject var locationManager   : LocationManager
     @Published var cityLocation           : String = "Mevcut Konum"
     @Published var currentWeather         : Current? = nil
     @Published var hourlyWeather          : [Current]? = nil
     @Published var dailyWeather           : [Daily]? = nil
     private var cancellables              = Set<AnyCancellable>()
-    private var hasFetcehedInitialWeather : Bool = false
+    private var hasFetchedWeather         = false
     
     init(locationManager: LocationManager) {
         self.locationManager = locationManager
         locationManager.$location
-            .compactMap { $0 } 
+            .compactMap { $0 }
+            .filter { [weak self] _ in !self!.hasFetchedWeather }
             .sink { [weak self] location in
                 guard let self else { return }
-                if !hasFetcehedInitialWeather {
-                    Task {
-                        await self.getCurrentWeather()
-                        await self.getHourlyWeather()
-                        await self.getDailyWeather()
-                        self.fetchCityName(from: location)
-                        self.hasFetcehedInitialWeather = true
-                    }
+                
+                Task {
+                    await self.getWeather()
+                    self.hasFetchedWeather = true
+                    self.fetchCityName(from: location)
                 }
             }
             .store(in: &cancellables)
     }
     
     @MainActor
-    func getCurrentWeather() async {
+    func getWeather() async {
         guard let location = locationManager.location else { return }
         
         do {
-            let current = try await NetworkManager().getCurrentWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            self.currentWeather = current
-            print("Current setted")
-        } catch {
-            print("hata sebebi", error.localizedDescription)
-        }
-    }
-    
-    @MainActor
-    func getHourlyWeather() async {
-        guard let location = locationManager.location else { return }
-        
-        do {
-            let hourly = try await Array(NetworkManager().getHourlyWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude).prefix(25))
-            self.hourlyWeather = hourly
-            print("Hourly setted")
-        } catch {
-            print("hata sebebi", error.localizedDescription)
-        }
-    }
-    
-    @MainActor
-    func getDailyWeather() async {
-        guard let location = locationManager.location else { return }
-        
-        do {
-            let daily = try await NetworkManager().getDailyWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            self.dailyWeather = daily
-            print("Daily setted")
+            let weather = try await NetworkManager().getWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            self.currentWeather = weather.current
+            self.hourlyWeather = filterCurrentHours(hourlyWeather: weather.hourly)
+            self.dailyWeather = filterDailyHours(dailyWeather: weather.daily)
+            print("weather setted!")
         } catch {
             print("hata sebebi", error.localizedDescription)
         }
@@ -84,11 +59,29 @@ class ContentViewModel: ObservableObject {
             guard let self = self else { return }
             if let placemark = placemarks?.first, let city = placemark.locality {
                 DispatchQueue.main.async {
-                    self.self .cityLocation = city
+                    self.cityLocation = city
                 }
             } else {
-                print(error?.localizedDescription)
+                print(error?.localizedDescription ?? "No location found")
             }
+        }
+    }
+    
+    private func filterCurrentHours(hourlyWeather: [Current]) -> [Current] {
+        let currentDate = Date()
+        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
+        
+        return hourlyWeather.filter { hourly in
+            return hourly.dt >= currentTimeStamp
+        }
+    }
+    
+    private func filterDailyHours(dailyWeather: [Daily]) -> [Daily] {
+        let currentDate = Date()
+        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
+        
+        return dailyWeather.filter { daily in
+            return daily.dt >= currentTimeStamp
         }
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ForecastView: View {
-    @ObservedObject var viewModel: ContentViewModel
+    @ObservedObject var viewModel = ContentViewModel.shared
     var bottomSheetTranslationProrated: CGFloat = 1
     @State private var selection = 0
 
@@ -71,5 +71,5 @@ struct ForecastView: View {
 }
 
 #Preview {
-    ForecastView(viewModel: ContentViewModel(locationManager: LocationManager()))
+    ForecastView()
 }

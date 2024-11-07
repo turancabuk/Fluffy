@@ -75,17 +75,13 @@ struct Weather: Codable {
     let icon: String
 }
 
-
 enum Icon: String, Codable {
-    case the01D = "Moon"
-    case the01N = "Cloud"
-    case the02N = "Moon cloud mid rain"
-    case the03D = "Sun cloud angled rain"
-    case the03N = "Sun"
-    case the04D = "Tornado"
-    case the10D = "Moon cloud fast wind"
+    case the01D = "01d"
+    case the01N = "01n"
+    case the03D = "03d"
+    case the04D = "04d"
+    case the10D = "10d"
 }
-
 
 enum Main: String, Codable {
     case clear = "Clear"

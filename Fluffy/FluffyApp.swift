@@ -20,6 +20,7 @@ struct FluffyApp: App {
                     if !hasLaunchedBefore {
                         locationManager.requestLocation()
                         hasLaunchedBefore = true
+                        print("FluffyApp.hasLaunchedBefore", hasLaunchedBefore)
                     }
                 }
                 .environmentObject(locationManager)

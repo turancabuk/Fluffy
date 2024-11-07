@@ -10,6 +10,7 @@ import SwiftUI
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
+    static let shared = LocationManager()
     @Published var location      : CLLocation?
     @Published var isAuthorized  = false
     private let manager          = CLLocationManager()

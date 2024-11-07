@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ForecastCardView: View {
+    @StateObject private var viewmodel = ContentViewModel.shared
     var forecastPeriod: ForecastPeriod
     var currentWeather: Current?
     var dailyWeather: Daily?
@@ -48,7 +49,7 @@ struct ForecastCardView: View {
                     Text("\(currentWeather.date, format: .dateTime.hour()):00")
                         .font(.subheadline.weight(.semibold))
                     VStack(spacing: -4) {
-                        Image("\(currentWeather.weather.first?.icon ?? "defaultIcon") small")
+                        Image("\(viewmodel.hourlyWeather?.first?.weather.first?.icon ?? "") small")
                         Text(currentWeather.pop ?? 0, format: .percent)
                             .font(.footnote.weight(.semibold))
                             .foregroundStyle(.probabilityTextAsset)

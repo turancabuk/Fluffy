@@ -15,7 +15,7 @@ enum BottomSheetPosition: CGFloat, CaseIterable {
 
 struct ContentView: View {
     
-    @StateObject private var viewmodel  = ContentViewModel(locationManager: LocationManager())
+    @StateObject private var viewmodel  = ContentViewModel.shared
     @State var bottomSheetPosition      : BottomSheetPosition = .middle
     @State var bottomSheetTranslation   : CGFloat = BottomSheetPosition.middle.rawValue
     @State var hasDragged               : Bool = false
@@ -73,7 +73,7 @@ struct ContentView: View {
                 BottomSheetView(position: $bottomSheetPosition) {
                     
                 } content: {
-                    ForecastView(viewModel: ContentViewModel(locationManager: LocationManager()), bottomSheetTranslationProrated: 1)
+                    ForecastView()
                 }
                 
                 .onBottomSheetDrag { translation in
@@ -84,11 +84,14 @@ struct ContentView: View {
                 }
                 
                 TabBarView(navButtonTapped: {
-                    viewmodel.locationManager.requestLocation()
+//                    viewmodel.locationManager.requestLocation()
                     print("reques taped")
                 })
                 .offset(y: bottomSheetTranslationProrated * 115)
             }
+        }
+        .task {
+            await viewmodel.getWeather()
         }
         .navigationBarHidden(true)
     }
