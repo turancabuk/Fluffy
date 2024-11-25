@@ -19,8 +19,10 @@ struct ContentView: View {
     @State var bottomSheetPosition      : BottomSheetPosition = .middle
     @State var bottomSheetTranslation   : CGFloat = BottomSheetPosition.middle.rawValue
     @State var hasDragged               : Bool = false
-    var bottomSheetTranslationProrated  : CGFloat {
-        (bottomSheetTranslation - BottomSheetPosition.middle.rawValue) / (BottomSheetPosition.top.rawValue - BottomSheetPosition.middle.rawValue)
+    var bottomSheetTranslationProrated: CGFloat {
+        let translation = (bottomSheetTranslation - BottomSheetPosition.middle.rawValue) /
+                         (BottomSheetPosition.top.rawValue - BottomSheetPosition.middle.rawValue)
+        return min(max(translation, 0), 1)
     }
     
     var body: some View {
@@ -68,18 +70,18 @@ struct ContentView: View {
 
                 
                 BottomSheetView(position: $bottomSheetPosition) {
-                    
+                    // ...
                 } content: {
                     ForecastView()
                 }
-                
                 .onBottomSheetDrag { translation in
                     bottomSheetTranslation = translation / screenHeight
-                    withAnimation(.easeInOut) {
-                        hasDragged = bottomSheetPosition == .middle ? false : true
+                }
+                .onChange(of: bottomSheetPosition) { newPosition in
+                    withAnimation(.easeInOut(duration: 0.15)) {
+                        hasDragged = newPosition == .top
                     }
                 }
-                
                 TabBarView(navButtonTapped: {
 //                    viewmodel.locationManager.requestLocation()
                     print("reques taped")
