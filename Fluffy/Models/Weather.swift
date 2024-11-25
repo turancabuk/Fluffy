@@ -25,7 +25,14 @@ struct Welcome: Codable {
         case current, hourly, daily
     }
 
-    // Segmented control yardımıyla saatlik veya günlük veriyi dönecek bir fonksiyon
+    var dailyWithTimezone: [Daily] {
+        daily.map { daily in
+            var updatedDaily = daily
+            updatedDaily.timezoneOffset = self.timezoneOffset
+            return updatedDaily
+        }
+    }
+    
     func forecastData(for period: ForecastPeriod) -> [any Identifiable] {
         switch period {
         case .hourly:
@@ -44,16 +51,27 @@ struct Current: Codable, Identifiable {
     let temp, feelsLike: Double
     let pressure, humidity: Int
     let dewPoint, uvi: Double
-    let clouds, visibility: Int
+    let clouds: Int
+    let visibility: Int?
     let windSpeed: Double
     let windDeg: Int
     let windGust: Double?
     let weather: [Weather]
     let pop: Double?
+    var timezoneOffset: Int = 0
     var date: Date {
-        Date(timeIntervalSince1970: TimeInterval(dt))
+        Date(timeIntervalSince1970: TimeInterval(dt + timezoneOffset))
     }
-
+    var sunriseDate: Date? {
+        guard let sunrise = sunrise else { return nil }
+        return Date(timeIntervalSince1970: TimeInterval(sunrise + timezoneOffset))
+    }
+    
+    var sunsetDate: Date? {
+        guard let sunset = sunset else { return nil }
+        return Date(timeIntervalSince1970: TimeInterval(sunset + timezoneOffset))
+    }
+    
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, temp
         case feelsLike = "feels_like"
@@ -78,9 +96,22 @@ struct Weather: Codable {
 enum Icon: String, Codable {
     case the01D = "01d"
     case the01N = "01n"
+    case the02D = "02d"
+    case the02N = "02n"
     case the03D = "03d"
+    case the03N = "03n"
     case the04D = "04d"
+    case the04N = "04n"
+    case the09D = "09d"
+    case the09N = "09n"
     case the10D = "10d"
+    case the10N = "10n"
+    case the11D = "11d"
+    case the11N = "11n"
+    case the13D = "13d"
+    case the13N = "13n"
+    case the50D = "50d"
+    case the50N = "50n"
 }
 
 enum Main: String, Codable {
@@ -95,6 +126,7 @@ struct Daily: Codable, Identifiable {
     let dt, sunrise, sunset, moonrise: Int
     let moonset: Int
     let moonPhase: Double
+    let summary: String
     let temp: Temp
     let feelsLike: FeelsLike
     let pressure, humidity: Int
@@ -105,13 +137,15 @@ struct Daily: Codable, Identifiable {
     let clouds: Int
     let pop: Double?
     let uvi: Double
+    var timezoneOffset: Int = 0
     var date: Date {
         Date(timeIntervalSince1970: TimeInterval(dt))
     }
+    
     enum CodingKeys: String, CodingKey {
         case dt, sunrise, sunset, moonrise, moonset
         case moonPhase = "moon_phase"
-        case temp
+        case summary, temp
         case feelsLike = "feels_like"
         case pressure, humidity
         case dewPoint = "dew_point"

@@ -1,3 +1,4 @@
+
 //
 //  NetworkManager.swift
 //  Fluffy
@@ -14,7 +15,7 @@ struct NetworkManager {
                                 "https://api.openweathermap.org/data/3.0/onecall?lat=\(latitude)&lon=\(longitude)&units=metric&exclude=minutely,alerts&appid=068f33303987dd92002c812f8695a3bc") else {throw (NetworkError.badURL)}
         
         let (data, _) = try await URLSession.shared.data(from: url)
-        let weather   = try await JSONDecoder().decode(Welcome.self, from: data)
+        let weather   = try JSONDecoder().decode(Welcome.self, from: data)
         return weather
     }
 }

@@ -44,9 +44,8 @@ class ContentViewModel: ObservableObject {
         do {
             let weather = try await NetworkManager().getWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             self.currentWeather = weather.current
-            self.hourlyWeather = filterCurrentHours(hourlyWeather: weather.hourly)
-            self.dailyWeather = filterDailyHours(dailyWeather: weather.daily)
-            print("weather setted!")
+            self.hourlyWeather  = filterCurrentHours(hourlyWeather: Array(weather.hourly.prefix(25)))
+            self.dailyWeather   = filterDailyHours(dailyWeather: weather.daily)
         } catch {
             print("hata sebebi", error.localizedDescription)
         }

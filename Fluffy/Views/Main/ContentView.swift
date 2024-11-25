@@ -48,21 +48,18 @@ struct ContentView: View {
                         
                         VStack {
                             Text(attributedString)
+                                .multilineTextAlignment(.center)
+                                .frame(maxWidth: .infinity)
                             
                             if let daily = viewmodel.dailyWeather?.first {
                                 let dailyMax  = Int(daily.temp.max.rounded(.toNearestOrAwayFromZero))
                                 let dailyMin  = Int(daily.temp.min.rounded(.toNearestOrAwayFromZero))
-                                let feelsLike = Int(viewmodel.currentWeather?.feelsLike.rounded(.toNearestOrAwayFromZero) ?? 0)
-                                
-                                Text("Hissedilen: \(feelsLike)°")
-                                    .opacity(1 - bottomSheetTranslationProrated)
                                 
                                 Text("H: \(dailyMax)°   L: \(dailyMin)°")
                                     .font(.title3.weight(.semibold))
                                     .opacity(1 - bottomSheetTranslationProrated)
                             }
                         }
-                        
                         Spacer()
                     }
                     .padding(.top, 51)
