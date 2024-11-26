@@ -58,7 +58,8 @@ struct ForecastView: View {
                     visibility: viewModel.currentWeather?.visibility,
                     moonrise: moonriseDate,
                     moonset:  moonsetDate,
-                    moonphase: dailyWeather.moonPhase
+                    moonphase: dailyWeather.moonPhase,
+                    moonPhaseType: dailyWeather.moonPhaseType
                 )
             }
         }

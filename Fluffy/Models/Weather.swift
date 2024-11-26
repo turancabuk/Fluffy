@@ -154,6 +154,44 @@ struct Daily: Codable, Identifiable {
         case windGust = "wind_gust"
         case weather, clouds, pop, uvi
     }
+    
+    enum moonPhaseType: String {
+        case newMoon = "newmoon"
+        case waxingCrescent = "waxingcrescent"
+        case firstQuarter = "firstquarter"
+        case waxingGibbous = "waxinggibbous"
+        case fullMoon = "fullmoon"
+        case waningGibbous = "waninggibbous"
+        case thirdQuarter = "thirdquarter"
+        case waningCrescent = "waningcrescent"
+        
+        var imageName: String {
+            return self.rawValue
+        }
+    }
+    
+    var moonPhaseType: moonPhaseType {
+        switch moonPhase {
+        case 0.0, 1.0:
+            return .newMoon
+        case 0.0..<0.25:
+            return .waxingCrescent
+        case 0.25:
+            return .waxingGibbous
+        case 0.25..<0.5:
+            return .firstQuarter
+        case 0.5:
+            return .fullMoon
+        case 0.5..<0.75:
+            return .waningGibbous
+        case 0.75:
+            return .thirdQuarter
+        case 0.75..<1.0:
+            return .waningCrescent
+        default:
+            return .newMoon
+        }
+    }
 }
 
 // MARK: - FeelsLike
