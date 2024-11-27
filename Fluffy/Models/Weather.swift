@@ -11,7 +11,7 @@ enum ForecastPeriod {
     case daily
 }
 
-struct Welcome: Codable {
+struct WeatherModel: Codable {
     let lat, lon: Double
     let timezone: String
     let timezoneOffset: Int
@@ -156,14 +156,14 @@ struct Daily: Codable, Identifiable {
     }
     
     enum moonPhaseType: String {
-        case newMoon = "newmoon"
-        case waxingCrescent = "waxingcrescent"
-        case firstQuarter = "firstquarter"
-        case waxingGibbous = "waxinggibbous"
-        case fullMoon = "fullmoon"
-        case waningGibbous = "waninggibbous"
-        case thirdQuarter = "thirdquarter"
-        case waningCrescent = "waningcrescent"
+        case newMoon = "New Moon"
+        case waxingCrescent = "Waxing Crescent"
+        case firstQuarter = "First Quarter"
+        case waxingGibbous = "Waxing Gibbous"
+        case fullMoon = "Full Moon"
+        case waningGibbous = "Waning Gibbous"
+        case thirdQuarter = "Third Quarter"
+        case waningCrescent = "Waning Crescent"
         
         var imageName: String {
             return self.rawValue

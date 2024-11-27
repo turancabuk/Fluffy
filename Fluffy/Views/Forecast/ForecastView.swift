@@ -16,7 +16,7 @@ struct ForecastView: View {
         ScrollView {
             VStack {
                 SegmentedControlView(selection: $selection)
-                ScrollView(.horizontal, showsIndicators: false) {
+                ScrollView(.horizontal) {
                     HStack {
                         if selection == 0 {
                             if let hourlyWeather = viewModel.hourlyWeather {
