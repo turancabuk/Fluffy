@@ -17,6 +17,8 @@ class ContentViewModel: ObservableObject {
     @Published var currentWeather         : Current? = nil
     @Published var hourlyWeather          : [Current]? = nil
     @Published var dailyWeather           : [Daily]? = nil
+    @Published var showLocationAlert      = false
+    @Published var isLoading              : Bool = false
     private var cancellables              = Set<AnyCancellable>()
     private var hasFetchedWeather         = false
     
@@ -29,9 +31,11 @@ class ContentViewModel: ObservableObject {
                 guard let self else { return }
                 
                 Task {
+                    self.showLoadingView()
                     await self.getWeather()
                     self.hasFetchedWeather = true
                     self.fetchCityName(from: location)
+                    self.hideLoadingView()
                 }
             }
             .store(in: &cancellables)
@@ -40,14 +44,16 @@ class ContentViewModel: ObservableObject {
     @MainActor
     func getWeather() async {
         guard let location = locationManager.location else { return }
-        
+        showLoadingView()
         do {
-            let weather = try await NetworkManager().getWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            let weather         = try await NetworkManager().getWeather(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             self.currentWeather = weather.current
             self.hourlyWeather  = filterCurrentHours(hourlyWeather: Array(weather.hourly.prefix(25)))
             self.dailyWeather   = filterDailyHours(dailyWeather: weather.daily)
+            hideLoadingView()
         } catch {
             print("hata sebebi", error.localizedDescription)
+            hideLoadingView()
         }
     }
     
@@ -83,4 +89,20 @@ class ContentViewModel: ObservableObject {
             return daily.dt >= currentTimeStamp
         }
     }
+    
+    func handleLocationButtonTapped() {
+        if locationManager.checkLocationPermission() {
+            // Konum izni varsa konumu güncelle
+            locationManager.requestLocationPermissionOrUpdate()
+            Task {
+                await getWeather()
+            }
+        } else {
+            // Konum izni yoksa alert göster
+            showLocationAlert = true
+        }
+    }
+    
+    private func showLoadingView() { isLoading = true }
+    private func hideLoadingView() { isLoading = false }
 }

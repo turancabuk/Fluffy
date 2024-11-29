@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ForecastView: View {
+    
     @ObservedObject var viewModel = ContentViewModel.shared
-    var bottomSheetTranslationProrated: CGFloat = 1
     @State private var selection = 0
+    var bottomSheetTranslationProrated: CGFloat = 1
 
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack {
                 SegmentedControlView(selection: $selection)
                 ScrollView(.horizontal) {

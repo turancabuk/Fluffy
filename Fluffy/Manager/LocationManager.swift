@@ -14,6 +14,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location      : CLLocation?
     @Published var isAuthorized  = false
     private let manager          = CLLocationManager()
+    @Published var locationPermissionStatus: CLAuthorizationStatus = .notDetermined
 
     override init() {
         super.init()
@@ -43,6 +44,31 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             manager.startUpdatingLocation()
         }else{
             isAuthorized = false
+        }
+    }
+    
+    func checkLocationPermission() -> Bool {
+        let status = manager.authorizationStatus
+        locationPermissionStatus = status
+        return status == .authorizedWhenInUse || status == .authorizedAlways
+    }
+    
+    func requestLocationPermissionOrUpdate() {
+        let status = manager.authorizationStatus
+        
+        switch status {
+        case .notDetermined:
+            requestLocation()
+        case .restricted, .denied:
+            // Ayarlara yönlendirme için URL'i kontrol et
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url)
+            }
+        case .authorizedWhenInUse, .authorizedAlways:
+            // Konumu güncelle
+            manager.startUpdatingLocation()
+        @unknown default:
+            break
         }
     }
 }

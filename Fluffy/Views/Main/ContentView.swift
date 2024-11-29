@@ -27,67 +27,82 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            GeometryReader { geometry in
-                let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
-                let imageOffset = screenHeight + 36
-                ZStack {
-                    Image("Background")
-                        .resizable()
-                        .ignoresSafeArea()
-                        .offset(y: -bottomSheetTranslationProrated * imageOffset)
-                    
-                    // MARK: House Image
-                    Image("House")
-                        .frame(maxHeight: .infinity, alignment: .top)
-                        .padding(.top, 257)
-                        .offset(y: -bottomSheetTranslationProrated * imageOffset)
-                    
-                    // MARK: Current Weather
-                    VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
-                        
-                        Text("\(viewmodel.cityLocation)")
-                            .font(.largeTitle)
-                        
-                        VStack {
-                            Text(attributedString)
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: .infinity)
+            ZStack {
+                if viewmodel.isLoading {
+                    LoadingView()
+                }else{
+                    GeometryReader { geometry in
+                        let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
+                        let imageOffset = screenHeight + 36
+                        ZStack {
+                            Image("Background")
+                                .resizable()
+                                .ignoresSafeArea()
+                                .offset(y: -bottomSheetTranslationProrated * imageOffset)
                             
-                            if let daily = viewmodel.dailyWeather?.first {
-                                let dailyMax  = Int(daily.temp.max.rounded(.toNearestOrAwayFromZero))
-                                let dailyMin  = Int(daily.temp.min.rounded(.toNearestOrAwayFromZero))
+                            // MARK: House Image
+                            Image("House")
+                                .frame(maxHeight: .infinity, alignment: .top)
+                                .padding(.top, 227)
+                                .offset(y: -bottomSheetTranslationProrated * imageOffset)
+                            
+                            // MARK: Current Weather
+                            VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
                                 
-                                Text("H: \(dailyMax)°   L: \(dailyMin)°")
-                                    .font(.title3.weight(.semibold))
-                                    .opacity(1 - bottomSheetTranslationProrated)
+                                Text("\(viewmodel.cityLocation)")
+                                    .font(.largeTitle)
+                                
+                                VStack {
+                                    Text(attributedString)
+                                        .multilineTextAlignment(.center)
+                                        .frame(maxWidth: .infinity)
+                                    
+                                    if let daily = viewmodel.dailyWeather?.first {
+                                        let dailyMax  = Int(daily.temp.max.rounded(.toNearestOrAwayFromZero))
+                                        let dailyMin  = Int(daily.temp.min.rounded(.toNearestOrAwayFromZero))
+                                        
+                                        Text("H: \(dailyMax)°   L: \(dailyMin)°")
+                                            .font(.title3.weight(.semibold))
+                                            .opacity(1 - bottomSheetTranslationProrated)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding(.top, 51)
+                            .offset(y: -bottomSheetTranslationProrated * 46)
+                        }
+
+                        
+                        BottomSheetView(position: $bottomSheetPosition) {
+                            // ...
+                        } content: {
+                            ForecastView()
+                        }
+                        .onBottomSheetDrag { translation in
+                            bottomSheetTranslation = translation / screenHeight
+                        }
+                        .onChange(of: bottomSheetPosition) { newPosition in
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                hasDragged = newPosition == .top
                             }
                         }
-                        Spacer()
-                    }
-                    .padding(.top, 51)
-                    .offset(y: -bottomSheetTranslationProrated * 46)
-                }
-
-                
-                BottomSheetView(position: $bottomSheetPosition) {
-                    // ...
-                } content: {
-                    ForecastView()
-                }
-                .onBottomSheetDrag { translation in
-                    bottomSheetTranslation = translation / screenHeight
-                }
-                .onChange(of: bottomSheetPosition) { newPosition in
-                    withAnimation(.easeInOut(duration: 0.15)) {
-                        hasDragged = newPosition == .top
+                        TabBarView(navButtonTapped: {
+                            viewmodel.handleLocationButtonTapped()
+                        })
+                        .offset(y: bottomSheetTranslationProrated * 115)
                     }
                 }
-                TabBarView(navButtonTapped: {
-//                    viewmodel.locationManager.requestLocation()
-                    print("reques taped")
-                })
-                .offset(y: bottomSheetTranslationProrated * 115)
             }
+        }
+        .alert("Konum İzni Gerekli", isPresented: $viewmodel.showLocationAlert) {
+            Button("Ayarlara Git") {
+                 if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("İptal", role: .cancel) {}
+        } message: {
+            Text("Hava durumu bilgilerini görüntüleyebilmek için konum iznine ihtiyacımız var.")
         }
         .task {
             await viewmodel.getWeather()
