@@ -29,15 +29,15 @@ struct FeelslikeView: View {
             HStack(spacing: 4) {
                 VStack(alignment: .leading) {
                     Text("morning: \(Int(morning?.rounded(.toNearestOrAwayFromZero) ?? 0))")
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.primary.opacity(0.6))
                     Divider()
                         .background(.gray)
                     Text("evening:  \(Int(evening?.rounded(.toNearestOrAwayFromZero) ?? 0))")
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.primary.opacity(0.6))
                     Divider()
                         .background(.gray)
-                    Text("night:      \(Int(night?.rounded(.toNearestOrAwayFromZero) ?? 0))")
-                        .foregroundStyle(.gray)
+                    Text("night:       \(Int(night?.rounded(.toNearestOrAwayFromZero) ?? 0))")
+                        .foregroundStyle(.primary.opacity(0.6))
                 }
             }
             Spacer()

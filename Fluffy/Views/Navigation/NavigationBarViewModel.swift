@@ -37,8 +37,8 @@ class NavigationBarViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.weather        = weather
                     self.currentWeather = weather.current
-                    self.hourlyWeather  = weather.hourly
-                    self.dailyWeather   = weather.daily
+                    self.hourlyWeather  = self.filterCurrentHours(hourlyWeather: weather.hourly)
+                    self.dailyWeather   = self.filterDailyHours(dailyWeather: weather.daily)
                     self.isLoading      = false
                 }
             } else {
@@ -52,6 +52,24 @@ class NavigationBarViewModel: ObservableObject {
                 self.errorMessage = error.localizedDescription
                 self.isLoading = false
             }
+        }
+    }
+    
+    private func filterCurrentHours(hourlyWeather: [Current]) -> [Current] {
+        let currentDate = Date()
+        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
+        
+        return hourlyWeather.filter { hourly in
+            return hourly.dt >= currentTimeStamp
+        }
+    }
+    
+    private func filterDailyHours(dailyWeather: [Daily]) -> [Daily] {
+        let currentDate = Date()
+        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
+        
+        return dailyWeather.filter { daily in
+            return daily.dt >= currentTimeStamp
         }
     }
 }

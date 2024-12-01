@@ -35,7 +35,7 @@ struct PressureView: View {
                         .font(.system(size: 20, weight: .bold))
                     Text("hPa")
                         .font(.system(size: 12))
-                        .foregroundColor(.gray)
+                        .foregroundStyle(.primary.opacity(0.6))
                 }
             }
             .padding(.bottom)

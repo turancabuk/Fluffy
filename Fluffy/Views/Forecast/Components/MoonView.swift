@@ -50,7 +50,7 @@ struct MoonView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 14)
+                .padding(.horizontal, 16)
                 Spacer()
                 VStack(alignment: .trailing) {
                     if let phaseType = moonPhaseType {
@@ -61,7 +61,7 @@ struct MoonView: View {
                     }
                 }
             }
-            .foregroundStyle(.gray)
+            .foregroundStyle(.primary.opacity(0.6))
         }
         .widgetStyleSubviews()
         .padding(.horizontal, 8)

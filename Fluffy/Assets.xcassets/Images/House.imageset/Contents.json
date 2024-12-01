@@ -1,17 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "lighthouse 1.png",
+      "filename" : "House.jpg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "lighthouse 1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "lighthouse 1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -15,7 +15,7 @@ struct LoadingView: View {
             ZStack {
                 Image("pin")
                     .resizable()
-                    .frame(width: 124, height: 124)
+                    .frame(width: 132, height: 162)
             }
         }
     }

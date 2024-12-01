@@ -31,13 +31,14 @@ struct WindView: View {
                         .background(Color.gray)
                     Text("degree:  \(windDeg ?? 0)")
                 }
-                .foregroundStyle(.gray)
+                .foregroundStyle(.primary.opacity(0.6))
                 Spacer()
                 ZStack {
                     // Dış çember
                     Circle()
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                        .stroke(Color.primary.opacity(0.3), lineWidth: 1)
                         .frame(width: 120, height: 120)
+                        .foregroundStyle(.primary.opacity(0.9))
                     
                     // Yön işaretleri (N, S, E, W)
                     VStack {
@@ -45,7 +46,7 @@ struct WindView: View {
                         Spacer()
                         Text("S").font(.system(size: 12))
                     }
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary.opacity(0.9))
                     .frame(height: 110)
                     
                     HStack {
@@ -53,16 +54,17 @@ struct WindView: View {
                         Spacer()
                         Text("E").font(.system(size: 12))
                     }
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primary.opacity(0.9))
                     .frame(width: 110)
                     
                     // Küçük yön işaretleri
                     ForEach(0..<8) { i in
                         Rectangle()
-                            .fill(Color.gray.opacity(0.3))
+                            .fill(Color.primary.opacity(0.3))
                             .frame(width: 1, height: 8)
                             .offset(y: -46)
                             .rotationEffect(.degrees(Double(i) * 45))
+                            .foregroundStyle(.primary.opacity(0.9))
                     }
                     
                     // Rüzgar yönü göstergesi (ok)
@@ -84,9 +86,9 @@ struct WindView: View {
                         .stroke(
                             LinearGradient(
                                 gradient: Gradient(colors: [
-                                    .white.opacity(0.9),
-                                    .white.opacity(0.9),
-                                    .white
+                                    .primary.opacity(0.9),
+                                    .primary.opacity(0.9),
+                                    .primary
                                 ]),
                                 startPoint: .center,
                                 endPoint: .top

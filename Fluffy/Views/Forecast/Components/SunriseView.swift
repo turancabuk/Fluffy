@@ -22,7 +22,7 @@ struct SunriseView: View {
                             Image(systemName: "sunrise")
                             Text("sunrise")
                         }
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.primary.opacity(0.6))
                         if let timeFormatter {
                             Text("\(sunrise.map {timeFormatter.string(from: $0)} ?? "HH:mm")")
                                 .font(.title)
@@ -36,7 +36,7 @@ struct SunriseView: View {
                             Image(systemName: "sunset")
                             Text("sunset")
                         }
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.primary.opacity(0.6))
                         if let timeFormatter {
                             Text("\(sunset.map {timeFormatter.string(from: $0)} ?? "HH:mm")")
                                 .font(.title)

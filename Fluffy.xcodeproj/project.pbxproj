@@ -15,6 +15,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5C1BD71B2CFCB0AC00735DD2 /* New Folder */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "New Folder";
+			sourceTree = "<group>";
+		};
 		5C951C4F2CC788CD00E025A0 /* Fluffy */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Fluffy;
@@ -39,6 +44,7 @@
 			children = (
 				5C951C4F2CC788CD00E025A0 /* Fluffy */,
 				5C951C4E2CC788CD00E025A0 /* Products */,
+				5C1BD71B2CFCB0AC00735DD2 /* New Folder */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +72,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				5C1BD71B2CFCB0AC00735DD2 /* New Folder */,
 				5C951C4F2CC788CD00E025A0 /* Fluffy */,
 			);
 			name = Fluffy;

@@ -66,7 +66,6 @@ struct NavigationBarView: View {
             .makeBlurView(radius: 20, opaque: true)
             .background(Color.navBarBackground)
             
-            // Content Area - Scrollable
             ScrollView(showsIndicators: false) {
                 if viewModel.isLoading {
                     ProgressView()
@@ -76,30 +75,11 @@ struct NavigationBarView: View {
                         .foregroundStyle(.red)
                         .padding(.top, 20)
                 } else if let weather = viewModel.currentWeather {
-                    
-                    if let dailyWeather = viewModel.dailyWeather?.first {
-                        let moonriseDate = Date(timeIntervalSince1970: TimeInterval(dailyWeather.moonrise + (viewModel.hourlyWeather?.first?.timezoneOffset ?? 0)))
-                        let moonsetDate = Date(timeIntervalSince1970: TimeInterval(dailyWeather.moonset + (viewModel.hourlyWeather?.first?.timezoneOffset ?? 0)))
+                    VStack {
+                        // şehir
                         
-                        ForecastWidgetsView(
-                            sunrise         : weather.sunriseDate,
-                            sunset          : weather.sunsetDate,
-                            feelsLike       : weather.feelsLike,
-                            humidity        : weather.humidity,
-                            summary         : dailyWeather.summary,
-                            pressure        : weather.pressure,
-                            windDeg         : dailyWeather.windDeg,
-                            windSpeed       : dailyWeather.windSpeed,
-                            windGust        : dailyWeather.windGust,
-                            morning         : dailyWeather.feelsLike.morn,
-                            evening         : dailyWeather.feelsLike.eve,
-                            night           : dailyWeather.feelsLike.night,
-                            visibility      : weather.visibility,
-                            moonrise        : moonriseDate,
-                            moonset         : moonsetDate,
-                            moonphase       : dailyWeather.moonPhase,
-                            moonPhaseType   : dailyWeather.moonPhaseType)
-                        .padding(.vertical, 20)
+                        ForecastView()
+                            .padding(.vertical, 12)
                     }
                 }
             }

@@ -35,28 +35,25 @@ struct ContentView: View {
                         let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
                         let imageOffset = screenHeight + 36
                         ZStack {
-                            Image("Background")
+                            Image("House")
                                 .resizable()
+                                .frame(width: 500)
+                                .scaledToFit()
                                 .ignoresSafeArea()
                                 .offset(y: -bottomSheetTranslationProrated * imageOffset)
-                            
-                            // MARK: House Image
-                            Image("House")
-                                .frame(maxHeight: .infinity, alignment: .top)
-                                .padding(.top, 227)
-                                .offset(y: -bottomSheetTranslationProrated * imageOffset)
+                                .padding(.leading, -48)
                             
                             // MARK: Current Weather
                             VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
                                 
                                 Text("\(viewmodel.cityLocation)")
                                     .font(.largeTitle)
-                                
+                                    .foregroundStyle(hasDragged ? .primary : Color.black.opacity(0.6))
                                 VStack {
                                     Text(attributedString)
                                         .multilineTextAlignment(.center)
                                         .frame(maxWidth: .infinity)
-                                    
+
                                     if let daily = viewmodel.dailyWeather?.first {
                                         let dailyMax  = Int(daily.temp.max.rounded(.toNearestOrAwayFromZero))
                                         let dailyMin  = Int(daily.temp.min.rounded(.toNearestOrAwayFromZero))
@@ -64,11 +61,13 @@ struct ContentView: View {
                                         Text("H: \(dailyMax)°   L: \(dailyMin)°")
                                             .font(.title3.weight(.semibold))
                                             .opacity(1 - bottomSheetTranslationProrated)
+                                            .foregroundStyle(.black.opacity(0.6))
                                     }
                                 }
                                 Spacer()
                             }
                             .padding(.top, 51)
+                            .padding(.leading, hasDragged ? -68 : 0)
                             .offset(y: -bottomSheetTranslationProrated * 46)
                         }
 
@@ -118,7 +117,7 @@ struct ContentView: View {
 
         if let temp = string.range(of: "\(roundedTemp)°") {
              string[temp].font = .system(size: (96 - (bottomSheetTranslationProrated * (96 - 20))), weight: hasDragged ? .semibold : .thin)
-             string[temp].foregroundColor = hasDragged ? .secondary : .primary
+            string[temp].foregroundColor = hasDragged ? .secondary : .black
          }
          
          if let pipe = string.range(of: " | ") {
@@ -128,7 +127,8 @@ struct ContentView: View {
          
         if let weather = string.range(of: "\(weatherDescription ?? "")") {
              string[weather].font = .title3.weight(.semibold)
-             string[weather].foregroundColor = .secondary
+//             string[weather].foregroundColor = .secondary
+            string[weather].foregroundColor = hasDragged ? .secondary : Color.black.opacity(0.6)
          }
          return string
      }
