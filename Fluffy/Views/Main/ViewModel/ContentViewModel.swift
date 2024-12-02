@@ -51,6 +51,7 @@ class ContentViewModel: ObservableObject {
             self.hourlyWeather  = filterCurrentHours(hourlyWeather: Array(weather.hourly.prefix(25)))
             self.dailyWeather   = filterDailyHours(dailyWeather: weather.daily)
             hideLoadingView()
+            print("***getWeather")
         } catch {
             print("hata sebebi", error.localizedDescription)
             hideLoadingView()

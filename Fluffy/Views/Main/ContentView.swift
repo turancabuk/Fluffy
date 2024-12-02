@@ -75,7 +75,7 @@ struct ContentView: View {
                         BottomSheetView(position: $bottomSheetPosition) {
                             // ...
                         } content: {
-                            ForecastView()
+                            ForecastView(currentWeather: viewmodel.currentWeather, hourlyWeather: viewmodel.hourlyWeather, dailyWeather: viewmodel.dailyWeather)
                         }
                         .onBottomSheetDrag { translation in
                             bottomSheetTranslation = translation / screenHeight

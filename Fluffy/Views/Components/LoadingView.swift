@@ -9,15 +9,10 @@ import SwiftUI
 
 struct LoadingView: View {
     var body: some View {
-        ZStack {
-            Color(.systemBackground)
-                .ignoresSafeArea()
-            ZStack {
-                Image("pin")
-                    .resizable()
-                    .frame(width: 132, height: 162)
-            }
-        }
+        Image("pin")
+            .resizable()
+            .frame(width: 132, height: 162)
+            .allowsHitTesting(true)
     }
 }
 

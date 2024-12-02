@@ -14,11 +14,11 @@ struct TabBarView: View {
     var body: some View {
         ZStack {
             Arc()
-                .fill(Color.background1)
+                .fill(LinearGradient(colors: [.color, .color], startPoint: .topLeading, endPoint: .bottomLeading))
                 .frame(height: 88)
                 .overlay {
                     Arc()
-                        .stroke(Color.tabBarBorder, lineWidth: 0.5)
+                        .stroke(.color1, lineWidth: 0.5)
                 }
             HStack {
                 Button {
@@ -29,7 +29,7 @@ struct TabBarView: View {
                 }
                 Spacer()
                 NavigationLink {
-                    NavigationBarView()
+                    SearchView()
                 } label: {
                     Image(systemName: "list.star")
                         .frame(width: 44, height: 44)

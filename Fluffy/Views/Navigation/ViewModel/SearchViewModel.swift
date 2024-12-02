@@ -1,5 +1,5 @@
 //
-//  NavigationBarViewModel.swift
+//  SearchViewModel.swift
 //  Fluffy
 //
 //  Created by Turan Çabuk on 29.11.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class NavigationBarViewModel: ObservableObject {
+class SearchViewModel: ObservableObject {
     @Published var searchText       = ""
     @Published var weather          : WeatherModel?
     @Published var currentWeather   : Current? = nil
@@ -24,22 +24,20 @@ class NavigationBarViewModel: ObservableObject {
             self.isLoading = true
             self.errorMessage = nil
         }
-        
         do {
             // Önce şehir koordinatlarını al
             if let coordinates = try await networkManager.getCoordinates(for: searchText) {
                 // Koordinatları kullanarak hava durumunu al
                 let weather = try await networkManager.getWeather(
                     latitude: coordinates.lat,
-                    longitude: coordinates.lon
-                )
-                
+                    longitude: coordinates.lon)
                 DispatchQueue.main.async {
                     self.weather        = weather
                     self.currentWeather = weather.current
                     self.hourlyWeather  = self.filterCurrentHours(hourlyWeather: weather.hourly)
                     self.dailyWeather   = self.filterDailyHours(dailyWeather: weather.daily)
                     self.isLoading      = false
+                    print("***searchWeather")
                 }
             } else {
                 DispatchQueue.main.async {

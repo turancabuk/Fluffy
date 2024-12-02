@@ -22,7 +22,7 @@ struct SegmentedControlView: View {
                     Text("Hourly Forecast")
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
-                
+                .foregroundStyle(selection == 0 ? .primary : .secondary)
                 Button {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         selection = 1
@@ -31,9 +31,10 @@ struct SegmentedControlView: View {
                     Text("Weekly Forecast")
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
+                .foregroundStyle(selection == 1 ? .primary : .secondary)
             }
             .font(.subheadline.weight(.semibold))
-            .foregroundStyle(.secondary)
+//            .foregroundStyle(selection == 0 ? .secondary : .primary)
             Divider()
                 .background(.white.opacity(0.5))
                 .blendMode(.overlay)

@@ -9,9 +9,11 @@ import SwiftUI
 
 struct ForecastView: View {
     
-    @ObservedObject var viewModel = ContentViewModel.shared
-    @State private var selection = 0
-    var bottomSheetTranslationProrated: CGFloat = 1
+    var currentWeather                  : Current? = nil
+    var hourlyWeather                   : [Current]? = nil
+    var dailyWeather                    : [Daily]? = nil
+    @State private var selection        = 0
+    var bottomSheetTranslationProrated  : CGFloat = 1
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -20,14 +22,14 @@ struct ForecastView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         if selection == 0 {
-                            if let hourlyWeather = viewModel.hourlyWeather {
+                            if let hourlyWeather = hourlyWeather {
                                 ForEach(hourlyWeather, id: \.dt) { forecast in
                                     ForecastCardView(forecastPeriod: .hourly, currentWeather: forecast)
                                 }
                                 .transition(.offset(x: -430))
                             }
                         } else {
-                            if let dailyWeather = viewModel.dailyWeather {
+                            if let dailyWeather = dailyWeather {
                                 ForEach(dailyWeather, id: \.dt) { forecast in
                                     ForecastCardView(forecastPeriod: .daily, dailyWeather: forecast)
                                 }
@@ -39,28 +41,28 @@ struct ForecastView: View {
                 }
                 .padding(.horizontal, 20)
             }
-            if let dailyWeather = viewModel.dailyWeather?.first {
-                let moonriseDate = Date(timeIntervalSince1970: TimeInterval(dailyWeather.moonrise + (viewModel.hourlyWeather?.first?.timezoneOffset ?? 0)))
-                let moonsetDate = Date(timeIntervalSince1970: TimeInterval(dailyWeather.moonset + (viewModel.hourlyWeather?.first?.timezoneOffset ?? 0)))
+            if let dailyWeather = dailyWeather?.first {
+                let moonriseDate = Date(timeIntervalSince1970: TimeInterval(dailyWeather.moonrise + (hourlyWeather?.first?.timezoneOffset ?? 0)))
+                let moonsetDate = Date(timeIntervalSince1970: TimeInterval(dailyWeather.moonset + (hourlyWeather?.first?.timezoneOffset ?? 0)))
 
                 ForecastWidgetsView(
-                    sunrise: viewModel.currentWeather?.sunriseDate,
-                    sunset: viewModel.currentWeather?.sunsetDate,
-                    feelsLike: viewModel.currentWeather?.feelsLike,
-                    humidity: viewModel.currentWeather?.humidity,
-                    summary: dailyWeather.summary,
-                    pressure: viewModel.currentWeather?.pressure,
-                    windDeg: dailyWeather.windDeg,
-                    windSpeed: dailyWeather.windSpeed,
-                    windGust: dailyWeather.windGust,
-                    morning: dailyWeather.feelsLike.morn,
-                    evening: dailyWeather.feelsLike.eve,
-                    night: dailyWeather.feelsLike.night,
-                    visibility: viewModel.currentWeather?.visibility,
-                    moonrise: moonriseDate,
-                    moonset:  moonsetDate,
-                    moonphase: dailyWeather.moonPhase,
-                    moonPhaseType: dailyWeather.moonPhaseType
+                    sunrise       : currentWeather?.sunriseDate,
+                    sunset        : currentWeather?.sunsetDate,
+                    feelsLike     : currentWeather?.feelsLike,
+                    humidity      : currentWeather?.humidity,
+                    summary       : dailyWeather.summary,
+                    pressure      : currentWeather?.pressure,
+                    windDeg       : currentWeather?.windDeg,
+                    windSpeed     : currentWeather?.windSpeed,
+                    windGust      : currentWeather?.windGust,
+                    morning       : dailyWeather.feelsLike.morn,
+                    evening       : dailyWeather.feelsLike.eve,
+                    night         : dailyWeather.feelsLike.night,
+                    visibility    : currentWeather?.visibility,
+                    moonrise      : moonriseDate,
+                    moonset       : moonsetDate,
+                    moonphase     : dailyWeather.moonPhase,
+                    moonPhaseType : dailyWeather.moonPhaseType
                 )
             }
         }

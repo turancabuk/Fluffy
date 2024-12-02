@@ -1,5 +1,5 @@
 //
-//  NavigationBarView.swift
+//  SearchView.swift
 //  Fluffy
 //
 //  Created by Turan Çabuk on 28.10.2024.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct NavigationBarView: View {
+struct SearchView: View {
     
     @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = NavigationBarViewModel()
+    @StateObject private var viewModel = SearchViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -63,8 +63,9 @@ struct NavigationBarView: View {
             }
             .padding(.horizontal, 16)
             .padding(.top, 49)
+            .padding(.bottom, 6)
             .makeBlurView(radius: 20, opaque: true)
-            .background(Color.navBarBackground)
+            .background(Color.secondary.opacity(0.4))
             
             ScrollView(showsIndicators: false) {
                 if viewModel.isLoading {
@@ -78,7 +79,7 @@ struct NavigationBarView: View {
                     VStack {
                         // şehir
                         
-                        ForecastView()
+                        ForecastView(currentWeather: viewModel.currentWeather, hourlyWeather: viewModel.hourlyWeather, dailyWeather: viewModel.dailyWeather)
                             .padding(.vertical, 12)
                     }
                 }
@@ -90,5 +91,5 @@ struct NavigationBarView: View {
 }
 
 #Preview {
-    NavigationBarView()
+    SearchView()
 }

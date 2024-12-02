@@ -16,7 +16,7 @@ extension Color {
     static let bottomSheetBorderMiddle = LinearGradient(gradient: Gradient(stops: [.init(color: .white, location: 0), .init(color: .clear, location: 0.2)]), startPoint: .top, endPoint: .bottom)
     static let bottomSheetBorderTop = LinearGradient(gradient: Gradient(colors: [.white.opacity(0), .white, .white.opacity(0)]), startPoint: .leading, endPoint: .trailing)
     static let underLine = LinearGradient(gradient: Gradient(colors: [.white.opacity(0), .white, .white.opacity(0)]), startPoint: .leading, endPoint: .trailing)
-    static let tabBarBorder = Color("Tab Bar Border").opacity(0.5)
+//    static let tabBarBorder = Color("Tab Bar Border").opacity(0.5)
     static let forecastCardBackground = Color("Forecast Card Background")
     static let probabilityText = Color("Probability Text")
 }
