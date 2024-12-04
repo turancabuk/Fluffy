@@ -7,10 +7,27 @@
 
 import Foundation
 
-struct GeocodingModel: Codable {
+struct GeocodingModel: Codable, Identifiable {
+    let id = UUID()
     let name: String
     let lat: Double
     let lon: Double
     let country: String
+    let state: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case lat
+        case lon
+        case country
+        case state
+    }
+    
+    var fullLocationName: String {
+        if let state = state {
+            return "\(name)/\(state)/\(country)"
+        }
+        return "\(name)/\(country)"
+    }
 }
  

@@ -34,20 +34,20 @@ struct SearchView: View {
                     Spacer()
                 }
                 .frame(height: 52)
-                
                 // Search Bar
                 HStack {
                     Image(systemName: "magnifyingglass")
                     TextField("Search a city or airport", text: $viewModel.searchText)
+                        .disabled(viewModel.selectedLocation != nil)  // Konum seçildiğinde devre dışı bırak
                         .onSubmit {
                             Task {
-                                await viewModel.searchCity()
+                                await viewModel.searchLocations()
                             }
                         }
-                    
                     if !viewModel.searchText.isEmpty {
                         Button {
                             viewModel.searchText = ""
+                            viewModel.clearSelection()  // Seçimi temizle
                         } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .foregroundStyle(.white)
@@ -67,24 +67,50 @@ struct SearchView: View {
             .makeBlurView(radius: 20, opaque: true)
             .background(.color)
             
-            ScrollView(showsIndicators: false) {
-                if viewModel.isLoading {
-                    ProgressView()
-                        .padding(.top, 20)
-                } else if let error = viewModel.errorMessage {
-                    Text(error)
-                        .foregroundStyle(.red)
-                        .padding(.top, 20)
-                } else if let weather = viewModel.currentWeather {
+            // Arama sonuçları listesi
+            if !viewModel.searchResults.isEmpty && viewModel.selectedLocation == nil {
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.searchResults) { location in
+                            Button {
+                                Task {
+                                    await viewModel.selectLocation(location)
+                                }
+                            } label: {
+                                LocationCell(location: location)
+                            }
+                        }
+                    }
+                    .padding()
+                }
+            }
+            // Seçilen lokasyonun hava durumu
+            if viewModel.currentWeather != nil {
+                ScrollView(showsIndicators: false) {
                     VStack {
-                        ForecastView(currentWeather: viewModel.currentWeather, hourlyWeather: viewModel.hourlyWeather, dailyWeather: viewModel.dailyWeather)
-                            .padding(.vertical, 12)
+                        ForecastView(
+                            currentWeather: viewModel.currentWeather,
+                            hourlyWeather: viewModel.hourlyWeather,
+                            dailyWeather: viewModel.dailyWeather
+                        )
+                        .padding(.vertical, 12)
                     }
                 }
             }
+            
+            if viewModel.isLoading {
+                ProgressView()
+                    .padding(.top, 20)
+            }
+            Spacer()
         }
         .ignoresSafeArea()
         .navigationBarBackButtonHidden()
+        .onChange(of: viewModel.searchText) { _ in
+            Task {
+                await viewModel.searchLocations()
+            }
+        }
     }
 }
 

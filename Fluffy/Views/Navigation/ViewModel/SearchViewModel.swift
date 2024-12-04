@@ -9,65 +9,57 @@ import SwiftUI
 
 class SearchViewModel: ObservableObject {
     @Published var searchText       = ""
-    @Published var weather          : WeatherModel?
-    @Published var currentWeather   : Current? = nil
-    @Published var hourlyWeather    : [Current]? = nil
-    @Published var dailyWeather     : [Daily]? = nil
+    @Published var searchResults    : [GeocodingModel] = []
+    @Published var selectedLocation : GeocodingModel?
+    @Published var currentWeather   : Current?
+    @Published var hourlyWeather    : [Current]?
+    @Published var dailyWeather     : [Daily]?
     @Published var isLoading        = false
-    @Published var errorMessage     : String?
     private let networkManager      = NetworkManager()
     
-    func searchCity() async {
+    func searchLocations() async {
         guard !searchText.isEmpty else { return }
+        isLoading = true
         
-        DispatchQueue.main.async {
-            self.isLoading = true
-            self.errorMessage = nil
-        }
         do {
-            // Önce şehir koordinatlarını al
-            if let coordinates = try await networkManager.getCoordinates(for: searchText) {
-                // Koordinatları kullanarak hava durumunu al
-                let weather = try await networkManager.getWeather(
-                    latitude: coordinates.lat,
-                    longitude: coordinates.lon)
-                DispatchQueue.main.async {
-                    self.weather        = weather
-                    self.currentWeather = weather.current
-                    self.hourlyWeather  = self.filterCurrentHours(hourlyWeather: weather.hourly)
-                    self.dailyWeather   = self.filterDailyHours(dailyWeather: weather.daily)
-                    self.isLoading      = false
-                    print("***searchWeather")
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.errorMessage = "Şehir bulunamadı"
-                    self.isLoading = false
-                }
+            let locations = try await networkManager.getLocations(for: searchText)
+            DispatchQueue.main.async {
+                self.searchResults = locations
+                self.isLoading = false
             }
         } catch {
             DispatchQueue.main.async {
-                self.errorMessage = error.localizedDescription
+                self.isLoading = false
+                self.searchResults = []
+            }
+        }
+    }
+    
+    func selectLocation(_ location: GeocodingModel) async {
+        isLoading = true
+        do {
+            let weather = try await networkManager.getWeather(
+                latitude: location.lat,
+                longitude: location.lon
+            )
+            DispatchQueue.main.async {
+                self.currentWeather     = weather.current
+                self.hourlyWeather      = weather.hourly
+                self.dailyWeather       = weather.daily
+                self.selectedLocation   = location
+                self.isLoading          = false
+            }
+        } catch {
+            DispatchQueue.main.async {
                 self.isLoading = false
             }
         }
     }
     
-    private func filterCurrentHours(hourlyWeather: [Current]) -> [Current] {
-        let currentDate = Date()
-        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
-        
-        return hourlyWeather.filter { hourly in
-            return hourly.dt >= currentTimeStamp
-        }
-    }
-    
-    private func filterDailyHours(dailyWeather: [Daily]) -> [Daily] {
-        let currentDate = Date()
-        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
-        
-        return dailyWeather.filter { daily in
-            return daily.dt >= currentTimeStamp
-        }
+    func clearSelection() {
+        selectedLocation = nil
+        currentWeather = nil
+        hourlyWeather = nil
+        dailyWeather = nil
     }
 }

@@ -19,18 +19,15 @@ struct NetworkManager {
         return weather
     }
     
-    func getCoordinates(for cityName: String) async throws -> (lat: Double, lon: Double)? {
+    func getLocations(for cityName: String) async throws -> [GeocodingModel] {
         let encodedCity = cityName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? cityName
-        guard let url = URL(string: "https://api.openweathermap.org/geo/1.0/direct?q=\(encodedCity)&limit=1&appid=\(apiKey)") else {
+        let urlString = "https://api.openweathermap.org/geo/1.0/direct?q=\(encodedCity)&limit=5&appid=\(apiKey)"        
+        guard let url = URL(string: urlString) else {
             throw NetworkError.badURL
         }
         
         let (data, _) = try await URLSession.shared.data(from: url)
-        let locations = try JSONDecoder().decode([GeocodingModel].self, from: data)
-        
-        guard let firstLocation = locations.first else { return nil }
-        
-        return (lat: firstLocation.lat, lon: firstLocation.lon)
+        return try JSONDecoder().decode([GeocodingModel].self, from: data)
     }
 }
 
