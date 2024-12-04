@@ -34,7 +34,6 @@ struct SegmentedControlView: View {
                 .foregroundStyle(selection == 1 ? .primary : .secondary)
             }
             .font(.subheadline.weight(.semibold))
-//            .foregroundStyle(selection == 0 ? .secondary : .primary)
             Divider()
                 .background(.white.opacity(0.5))
                 .blendMode(.overlay)

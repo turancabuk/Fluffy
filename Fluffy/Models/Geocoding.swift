@@ -13,3 +13,4 @@ struct GeocodingModel: Codable {
     let lon: Double
     let country: String
 }
+ 

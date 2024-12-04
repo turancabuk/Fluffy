@@ -19,10 +19,10 @@ struct SubviewsWidgetModifier: ViewModifier {
         content
             .background(
                 RoundedRectangle(cornerRadius: 30)
-                    .fill(.secondary)
+                    .fill(.ultraThinMaterial)
+                    .shadow(color: .black, radius: 4)
             )
             .frame(width: width)
-            .shadow(color: Color.white.opacity(0.25), radius: 2)
     }
 }
 

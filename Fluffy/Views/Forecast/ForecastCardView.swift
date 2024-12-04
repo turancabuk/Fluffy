@@ -27,9 +27,9 @@ struct ForecastCardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 30)
-                .fill(.forecastCardBackgroundAsset.opacity(isActive ? 1 : 0.2))
+                .fill(LinearGradient(colors: [.color, .color], startPoint: .topLeading, endPoint: .bottomLeading).opacity(0.4))
                 .frame(width: 60, height: 146)
-                .shadow(color: .black.opacity(0.25), radius: 10, x: 5, y: 4)
+                .shadow(color: Color.black, radius: 2)
                 .overlay {
                     RoundedRectangle(cornerRadius: 30)
                         .strokeBorder(.white.opacity(isActive ? 0.5 : 0.2))

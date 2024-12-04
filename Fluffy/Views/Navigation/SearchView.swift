@@ -50,11 +50,11 @@ struct SearchView: View {
                             viewModel.searchText = ""
                         } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(.white)
                         }
                     }
                 }
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.white)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 7)
                 .frame(height: 36, alignment: .leading)
@@ -63,9 +63,9 @@ struct SearchView: View {
             }
             .padding(.horizontal, 16)
             .padding(.top, 49)
-            .padding(.bottom, 6)
+            .padding(.bottom, 16)
             .makeBlurView(radius: 20, opaque: true)
-            .background(Color.secondary.opacity(0.4))
+            .background(.color)
             
             ScrollView(showsIndicators: false) {
                 if viewModel.isLoading {
@@ -77,8 +77,6 @@ struct SearchView: View {
                         .padding(.top, 20)
                 } else if let weather = viewModel.currentWeather {
                     VStack {
-                        // şehir
-                        
                         ForecastView(currentWeather: viewModel.currentWeather, hourlyWeather: viewModel.hourlyWeather, dailyWeather: viewModel.dailyWeather)
                             .padding(.vertical, 12)
                     }
