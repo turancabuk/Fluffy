@@ -13,7 +13,7 @@ struct GeocodingModel: Codable, Identifiable {
     let lat: Double
     let lon: Double
     let country: String
-    let state: String?
+    var state: String?
     
     enum CodingKeys: String, CodingKey {
         case name

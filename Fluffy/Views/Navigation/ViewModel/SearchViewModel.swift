@@ -22,7 +22,17 @@ class SearchViewModel: ObservableObject {
         isLoading = true
         
         do {
-            let locations = try await networkManager.getLocations(for: searchText)
+            var locations = try await networkManager.getLocations(for: searchText)
+            // Türkiye lokasyonları için state bilgisini güncelle
+            for index in locations.indices {
+                if locations[index].country == "TR" {
+                    locations[index].state = locations[index].stateForTurkishCity
+                }
+            }
+            // Aynı isme sahip TR lokasyonlarını birleştir
+            if locations.contains(where: { $0.country == "TR" }) {
+                locations = consolidateTurkishLocations(locations)
+            }
             DispatchQueue.main.async {
                 self.searchResults = locations
                 self.isLoading = false
@@ -33,6 +43,21 @@ class SearchViewModel: ObservableObject {
                 self.searchResults = []
             }
         }
+    }
+    
+    private func consolidateTurkishLocations(_ locations: [GeocodingModel]) -> [GeocodingModel] {
+        var consolidatedLocations: [GeocodingModel] = []
+        var processedNames: Set<String> = []
+        
+        for location in locations {
+            let key = "\(location.name.lowercased())-\(location.country)-\(location.state ?? "")"
+            
+            if !processedNames.contains(key) {
+                consolidatedLocations.append(location)
+                processedNames.insert(key)
+            }
+        }
+        return consolidatedLocations
     }
     
     func selectLocation(_ location: GeocodingModel) async {
