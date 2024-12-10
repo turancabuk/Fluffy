@@ -29,7 +29,14 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 if viewmodel.isLoading {
-                    LoadingView()
+                    Image("re")
+                        .resizable()
+                        .frame(width: 120, height: 120)
+                        .scaledToFit()
+                        .background(
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(.thinMaterial)
+                        )
                 }else{
                     GeometryReader { geometry in
                         let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
@@ -58,10 +65,21 @@ struct ContentView: View {
                                         let dailyMax  = Int(daily.temp.max.rounded(.toNearestOrAwayFromZero))
                                         let dailyMin  = Int(daily.temp.min.rounded(.toNearestOrAwayFromZero))
                                         
-                                        Text("H: \(dailyMax)°   L: \(dailyMin)°")
-                                            .font(.title3.weight(.semibold))
-                                            .opacity(1 - bottomSheetTranslationProrated)
-                                            .foregroundStyle(.black.opacity(0.6))
+                                        HStack(spacing: 2) {
+                                            HStack {
+                                                Image(systemName: "chevron.up.2")
+                                                Text("\(dailyMax)")
+                                            }
+                                            Text(" | ")
+                                                .font(.system(size: 32).weight(.semibold))
+                                            HStack {
+                                                Image(systemName: "chevron.down.2")
+                                                Text("\(dailyMin)")
+                                            }
+                                        }
+                                        .font(.title3.weight(.semibold))
+                                        .opacity(1 - bottomSheetTranslationProrated)
+                                        .foregroundStyle(.black.opacity(0.6))
                                     }
                                 }
                                 Spacer()

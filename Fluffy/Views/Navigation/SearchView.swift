@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = SearchViewModel()
     
     var body: some View {
@@ -38,7 +39,11 @@ struct SearchView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                     TextField("Search a city or airport", text: $viewModel.searchText)
-                        .disabled(viewModel.selectedLocation != nil)  // Konum seçildiğinde devre dışı bırak
+                        .placeholder(when: viewModel.searchText.isEmpty,
+                                     foregroundColor: .gray) {
+                            Text("Search a city or airport")
+                        }
+                        .disabled(viewModel.selectedLocation != nil)
                         .onSubmit {
                             Task {
                                 await viewModel.searchLocations()
@@ -104,6 +109,7 @@ struct SearchView: View {
             }
             Spacer()
         }
+        .background(LinearGradient(colors: [.black.opacity(0.1), .color1.opacity(0.3), .color1.opacity(0.6)], startPoint: .top, endPoint: .bottom))
         .ignoresSafeArea()
         .navigationBarBackButtonHidden()
         .onChange(of: viewModel.searchText) { _ in

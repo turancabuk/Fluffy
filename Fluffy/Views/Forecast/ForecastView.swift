@@ -25,6 +25,7 @@ struct ForecastView: View {
                             if let hourlyWeather = hourlyWeather {
                                 ForEach(hourlyWeather, id: \.dt) { forecast in
                                     ForecastCardView(forecastPeriod: .hourly, currentWeather: forecast)
+                                        .padding(.horizontal, 2)
                                 }
                                 .transition(.offset(x: -430))
                             }
