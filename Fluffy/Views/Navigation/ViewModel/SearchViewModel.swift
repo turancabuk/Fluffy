@@ -88,3 +88,4 @@ class SearchViewModel: ObservableObject {
         dailyWeather = nil
     }
 }
+

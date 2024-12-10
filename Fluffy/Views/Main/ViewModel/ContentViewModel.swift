@@ -21,6 +21,7 @@ class ContentViewModel: ObservableObject {
     @Published var isLoading              : Bool = false
     private var cancellables              = Set<AnyCancellable>()
     private var hasFetchedWeather         = false
+    @AppStorage("notificationsEnabled") var notificationsEnabled = false
     
     init(locationManager: LocationManager) {
         self.locationManager = locationManager
@@ -52,6 +53,11 @@ class ContentViewModel: ObservableObject {
             self.dailyWeather   = filterDailyHours(dailyWeather: weather.daily)
             hideLoadingView()
             print("***getWeather")
+            
+            // Bildirim aktifse güncelle
+            if notificationsEnabled {
+                scheduleWeatherNotification()
+            }
         } catch {
             print("hata sebebi", error.localizedDescription)
             hideLoadingView()
@@ -106,4 +112,26 @@ class ContentViewModel: ObservableObject {
     
     private func showLoadingView() { isLoading = true }
     private func hideLoadingView() { isLoading = false }
+    
+    func toggleNotifications() {
+        notificationsEnabled.toggle()
+        if notificationsEnabled {
+            NotificationManager.shared.requestNotificationPermission()
+            scheduleWeatherNotification()
+        } else {
+            NotificationManager.shared.cancelAllNotifications()
+        }
+    }
+    
+    private func scheduleWeatherNotification() {
+        guard let current = currentWeather,
+              let daily = dailyWeather?.first else { return }
+        
+        NotificationManager.shared
+            .scheduleDailyWeatherNotification(
+                summary: daily.summary,
+                temp: current.temp
+            )
+        
+    }
 }

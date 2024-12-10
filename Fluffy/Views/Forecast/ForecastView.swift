@@ -20,7 +20,7 @@ struct ForecastView: View {
             VStack {
                 SegmentedControlView(selection: $selection)
                 ScrollView(.horizontal) {
-                    HStack {
+                    LazyHStack {
                         if selection == 0 {
                             if let hourlyWeather = hourlyWeather {
                                 ForEach(hourlyWeather, id: \.dt) { forecast in

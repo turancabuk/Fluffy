@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TabBarView: View {
-    
+    @StateObject private var viewmodel = ContentViewModel.shared
     var navButtonTapped   : (() -> Void)? = nil
     
     var body: some View {
@@ -28,6 +28,10 @@ struct TabBarView: View {
                         .frame(width: 44, height: 44)
                 }
                 Spacer()
+                NavigationLink(destination: SettingsView(viewModel: viewmodel)) {
+                    Image(systemName: "gearshape.fill")
+                        .frame(width: 44, height: 44)
+                }
                 NavigationLink {
                     SearchView()
                 } label: {

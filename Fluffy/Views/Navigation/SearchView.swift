@@ -75,7 +75,7 @@ struct SearchView: View {
             // Arama sonuçları listesi
             if !viewModel.searchResults.isEmpty && viewModel.selectedLocation == nil {
                 ScrollView {
-                    VStack(spacing: 12) {
+                    LazyVStack(spacing: 12) {
                         ForEach(viewModel.searchResults) { location in
                             Button {
                                 Task {
