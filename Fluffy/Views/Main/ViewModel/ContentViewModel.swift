@@ -97,6 +97,7 @@ class ContentViewModel: ObservableObject {
         }
     }
     
+    // Kullanıcının konum izin ayarları.
     func handleLocationButtonTapped() {
         if locationManager.checkLocationPermission() {
             // Konum izni varsa konumu güncelle
@@ -113,6 +114,7 @@ class ContentViewModel: ObservableObject {
     private func showLoadingView() { isLoading = true }
     private func hideLoadingView() { isLoading = false }
     
+    // Kullanıcıya Push Notification göndermek için kullandığım methodlar.
     func toggleNotifications() {
         notificationsEnabled.toggle()
         if notificationsEnabled {
@@ -132,6 +134,11 @@ class ContentViewModel: ObservableObject {
                 summary: daily.summary,
                 temp: current.temp
             )
-        
+    }
+    
+    // Mevcut sıcaklık değerlerini kullanıcının bulunduğu konuma göre formatlama metodları.
+    
+    func formatTemperature(_ temperature: Double) -> String {
+        return locationManager.formattedTemperature(temp: temperature)
     }
 }

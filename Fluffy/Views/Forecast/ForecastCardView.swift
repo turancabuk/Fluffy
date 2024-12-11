@@ -60,8 +60,9 @@ struct ForecastCardView: View {
                         }
                     }
                     .frame(height: 42)
-                    Text("\(Int(currentWeather.temp))°")
-                        .font(.title3)
+                    let formattedTemp = viewmodel.locationManager.formattedTemperature(temp: currentWeather.temp)
+                    Text(formattedTemp)
+                        .font(.system(size: 15, weight: .bold))
                 } else if let dailyWeather = dailyWeather {
                     Text(dailyWeather.date, format: .dateTime.weekday())
                         .font(.subheadline.weight(.semibold))
@@ -77,8 +78,9 @@ struct ForecastCardView: View {
                         }
                     }
                     .frame(height: 42)
-                    Text("\(Int(dailyWeather.temp.day))°")
-                        .font(.title2)
+                    let formattedTemp = viewmodel.locationManager.formattedTemperature(temp: dailyWeather.temp.day)
+                    Text(formattedTemp)
+                        .font(.system(size: 15, weight: .bold))
                 }
             }
             .padding(.horizontal, 8)

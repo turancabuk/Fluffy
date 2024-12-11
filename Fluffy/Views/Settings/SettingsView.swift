@@ -1,15 +1,8 @@
-//
-//  ContentViewModel.swift
-//  Fluffy
-//
-//  Created by Turan Çabuk on 28.10.2024.
-//
-
-
 import SwiftUI
 
 struct SettingsView: View {
     @ObservedObject var viewModel: ContentViewModel
+    @ObservedObject var locationManager = LocationManager.shared
     
     var body: some View {
         Form {
@@ -25,6 +18,26 @@ struct SettingsView: View {
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
+            }
+            
+            Section(header: Text("Sıcaklık Birimi")) {
+                Picker("Sıcaklık Birimi", selection: Binding(
+                    get: {locationManager.usesFahrenheit},
+                    set: { newValue in
+                        locationManager.usesFahrenheit = newValue
+                        Task {
+                            await viewModel.getWeather()
+                        }
+                    }
+                )) {
+                    Text("Santigrat (°C)").tag(false)
+                    Text("Fahrenheit (°F)").tag(true)
+                }
+                .pickerStyle(.segmented)
+                
+                Text("Seçilen sıcaklık birimine göre tüm sıcaklık değerleri otomatik olarak dönüştürülecektir.")
+                    .font(.caption)
+                    .foregroundStyle(.gray)
             }
         }
     }

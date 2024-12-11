@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FeelslikeView: View {
     
+    @StateObject private var locationManager = LocationManager.shared
     var feelsLike : Double?  = 0
     var morning   : Double?  = 0
     var evening   : Double?  = 0
@@ -18,25 +19,24 @@ struct FeelslikeView: View {
         VStack(alignment: .leading) {
             HStack {
                 Image(systemName: "thermometer.variable.and.figure")
-                Text("feelslike")
                     .font(.system(size: 22))
                 Spacer()
-                Text("\(Int(feelsLike?.rounded(.toNearestOrAwayFromZero) ?? 0))")
-                    .font(.system(size: 28))
+                Text(locationManager.formattedTemperature(temp: feelsLike ?? 0))
+                    .font(.system(size: 38))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
             HStack(spacing: 4) {
                 VStack(alignment: .leading) {
-                    Text("morning: \(Int(morning?.rounded(.toNearestOrAwayFromZero) ?? 0))")
+                    Text("morning: \(locationManager.formattedTemperature(temp: morning ?? 0))")
                         .foregroundStyle(.primary.opacity(0.6))
                     Divider()
                         .background(.gray)
-                    Text("evening:  \(Int(evening?.rounded(.toNearestOrAwayFromZero) ?? 0))")
+                    Text("evening:  \(locationManager.formattedTemperature(temp: evening ?? 0))")
                         .foregroundStyle(.primary.opacity(0.6))
                     Divider()
                         .background(.gray)
-                    Text("night:       \(Int(night?.rounded(.toNearestOrAwayFromZero) ?? 0))")
+                    Text("night:       \(locationManager.formattedTemperature(temp: night ?? 0))")
                         .foregroundStyle(.primary.opacity(0.6))
                 }
             }

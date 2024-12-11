@@ -10,12 +10,16 @@ import SwiftUI
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
-    static let shared = LocationManager()
+    static let shared            = LocationManager()
     @Published var location      : CLLocation?
     @Published var isAuthorized  = false
     private let manager          = CLLocationManager()
     @Published var locationPermissionStatus: CLAuthorizationStatus = .notDetermined
+    @Published var currentCountryCode: String?
+    @AppStorage("usesFahrenheit") var usesFahrenheit = false
+    private let geoCoder = CLGeocoder()
 
+    
     override init() {
         super.init()
         manager.delegate = self
@@ -28,12 +32,12 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let newLocation = locations.last else { return }
-        if let currentLocation = location, currentLocation.distance(from: newLocation) < 100 {
-            return
-        }
+        guard let location = locations.last else { return }
+        
+        determineCountry(location: location)
+        
         DispatchQueue.main.async {
-            self.location = newLocation
+            self.location = location
         }
         manager.stopUpdatingLocation()
     }
@@ -71,4 +75,36 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             break
         }
     }
+    
+    enum FahrenheitCountries: String {
+        case usa     = "US"
+        case bahamas = "BS"
+        case caymans = "KY"
+        case belise  = "BZ"
+        
+        static func usesFahrenheit(countryCode: String) -> Bool {
+            return [usa.rawValue, bahamas.rawValue, caymans.rawValue, belise.rawValue].contains(countryCode)
+        }
+    }
+    
+    func formattedTemperature(temp: Double) -> String {
+        if usesFahrenheit {
+            let fahrenheitTemp = (temp * 9 / 5) + 32
+            return "\(Int(fahrenheitTemp))°F"
+        }
+        return "\(Int(temp))°"
+    }
+    
+    func determineCountry(location: CLLocation) {
+        geoCoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
+            guard let self = self,
+                  let countryCode = placemarks?.first?.isoCountryCode else {return}
+            
+            DispatchQueue.main.async {
+                self.currentCountryCode = countryCode
+                self.usesFahrenheit = FahrenheitCountries.usesFahrenheit(countryCode: countryCode)
+            }
+        }
+    }
 }
+

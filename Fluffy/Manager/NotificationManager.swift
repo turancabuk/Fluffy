@@ -17,7 +17,7 @@ class NotificationManager {
     func scheduleDailyWeatherNotification(summary: String, temp: Double) {
         let content = UNMutableNotificationContent()
         content.title = "Günlük Hava Durumu"
-        content.body = "\(summary)\nSıcaklık: \(Int(temp))°C"
+        content.body = "\(summary)\nSıcaklık: \(temp)"
         content.sound = .default
         
         // Bildirim için saat ayarı (08:00)
