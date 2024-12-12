@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TabBarView: View {
+    
     @StateObject private var viewmodel = ContentViewModel.shared
     var navButtonTapped   : (() -> Void)? = nil
     
@@ -17,37 +18,47 @@ struct TabBarView: View {
                 .fill(LinearGradient(colors: [.color, .color], startPoint: .topLeading, endPoint: .bottomLeading))
                 .frame(height: 88)
                 .overlay {
-                    Arc()
-                        .stroke(.color1, lineWidth: 0.5)
+                    ZStack {
+                        Arc()
+                            .stroke(.color, lineWidth: 2.5)
+                            .padding(.top, 40)
+                        CustomTabBarButton()
+                            .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 0))
+                            .overlay {
+                                NavigationLink {
+                                    SearchView()
+                                } label: {
+                                    Image(systemName: "map.fill")
+                                        .font(.system(size: 30))
+                                        .offset(y: -4)
+                                        .foregroundStyle(.black)
+                                }
+                            }
+                    }
                 }
             HStack {
                 Button {
                     navButtonTapped?()
                 } label: {
-                    Image(systemName: "mappin.and.ellipse")
-                        .frame(width: 44, height: 44)
+                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90.circle")
+                        .font(.system(size: 26))
+                        .padding(.bottom, 10)
                 }
                 Spacer()
-                NavigationLink(destination: SettingsView(viewModel: viewmodel)) {
-                    Image(systemName: "gearshape.fill")
-                        .frame(width: 44, height: 44)
-                }
                 NavigationLink {
-                    SearchView()
+                    SettingsView(viewModel: viewmodel)
                 } label: {
-                    Image(systemName: "list.star")
-                        .frame(width: 44, height: 44)
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 24))
+                        .padding(.bottom, 8)
                 }
-                
             }
             .font(.title2)
             .padding(.horizontal, 24)
-            .padding(EdgeInsets(top: 0, leading: 32, bottom: 18, trailing: 32))
         }
         .frame(maxHeight: .infinity, alignment: .bottom)
         .foregroundStyle(.white)
         .ignoresSafeArea()
-
     }
 }
 
