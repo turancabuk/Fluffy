@@ -16,6 +16,7 @@ enum BottomSheetPosition: CGFloat, CaseIterable {
 struct ContentView: View {
     
     @StateObject private var viewmodel  = ContentViewModel.shared
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
     @State var bottomSheetPosition      : BottomSheetPosition = .middle
     @State var bottomSheetTranslation   : CGFloat = BottomSheetPosition.middle.rawValue
     @State var hasDragged               : Bool = false
@@ -29,14 +30,7 @@ struct ContentView: View {
         NavigationView {
             ZStack {
                 if viewmodel.isLoading {
-                    Image("re")
-                        .resizable()
-                        .frame(width: 120, height: 120)
-                        .scaledToFit()
-                        .background(
-                            RoundedRectangle(cornerRadius: 30)
-                                .fill(.thinMaterial)
-                        )
+                    LoadingView()
                 }else{
                     GeometryReader { geometry in
                         let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
@@ -48,11 +42,12 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .ignoresSafeArea()
                                 .offset(y: -bottomSheetTranslationProrated * imageOffset)
-                                .padding(.leading, -48)
+                                .padding(.leading, -68)
                             
                             // MARK: Current Weather
                             VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
-                                
+                                ThemeSwitcher()
+                                    .padding(EdgeInsets(top: -40, leading: 280, bottom: 0, trailing: 0))
                                 Text("\(viewmodel.cityLocation)")
                                     .font(.largeTitle)
                                     .foregroundStyle(hasDragged ? .primary : Color.black.opacity(0.6))
@@ -126,13 +121,22 @@ struct ContentView: View {
             await viewmodel.getWeather()
         }
         .navigationBarHidden(true)
+        .preferredColorScheme(isDarkMode ? .dark : .light)
     }
     private var attributedString: AttributedString {
         guard let currentWeather = viewmodel.currentWeather else { return AttributedString() }
         let roundedTemp = Int(currentWeather.temp.rounded(.toNearestOrAwayFromZero))
         let weatherDescription = currentWeather.weather.first?.description
         
-        let formattedTemp = viewmodel.locationManager.formattedTemperature(temp: Double(roundedTemp))
+        var formattedTemp = viewmodel.locationManager.formattedTemperature(temp: Double(roundedTemp))
+        if viewmodel.locationManager.usesFahrenheit {
+            formattedTemp = "\(formattedTemp)F"
+        }else{
+            formattedTemp = "\(formattedTemp)"
+        }
+        
+        let formattedTemp1 = viewmodel.locationManager.usesFahrenheit ? "\(roundedTemp)F" : "\(roundedTemp)"
+        
         var string = AttributedString("\(formattedTemp)" + (hasDragged ? " | " : "\n ") + "\(weatherDescription ?? "")")
 
         if let temp = string.range(of: formattedTemp) {

@@ -51,7 +51,7 @@ struct ForecastCardView: View {
                     VStack(spacing: -4) {
                         Image("\(currentWeather.weather.first?.icon ?? "")")
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                         if currentWeather.pop ?? 0 > 0 {
                             Text(currentWeather.pop ?? 0, format: .percent)
                                 .font(.footnote.weight(.semibold))
@@ -62,7 +62,7 @@ struct ForecastCardView: View {
                     .frame(height: 42)
                     let formattedTemp = viewmodel.locationManager.formattedTemperature(temp: currentWeather.temp)
                     Text(formattedTemp)
-                        .font(.system(size: 15, weight: .bold))
+                        .font(.system(size: 18, weight: .bold))
                 } else if let dailyWeather = dailyWeather {
                     Text(dailyWeather.date, format: .dateTime.weekday())
                         .font(.subheadline.weight(.semibold))
@@ -80,7 +80,7 @@ struct ForecastCardView: View {
                     .frame(height: 42)
                     let formattedTemp = viewmodel.locationManager.formattedTemperature(temp: dailyWeather.temp.day)
                     Text(formattedTemp)
-                        .font(.system(size: 15, weight: .bold))
+                        .font(.system(size: 18, weight: .bold))
                 }
             }
             .padding(.horizontal, 8)

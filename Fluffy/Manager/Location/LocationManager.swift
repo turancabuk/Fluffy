@@ -90,7 +90,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func formattedTemperature(temp: Double) -> String {
         if usesFahrenheit {
             let fahrenheitTemp = (temp * 9 / 5) + 32
-            return "\(Int(fahrenheitTemp))°F"
+            return "\(Int(fahrenheitTemp))°"
         }
         return "\(Int(temp))°"
     }

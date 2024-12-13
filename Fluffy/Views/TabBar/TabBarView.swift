@@ -28,10 +28,10 @@ struct TabBarView: View {
                                 NavigationLink {
                                     SearchView()
                                 } label: {
-                                    Image(systemName: "map.fill")
+                                    Image(systemName: "map")
                                         .font(.system(size: 30))
                                         .offset(y: -4)
-                                        .foregroundStyle(.black)
+                                        .foregroundStyle(.color)
                                 }
                             }
                     }

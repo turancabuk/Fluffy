@@ -60,6 +60,7 @@ class SearchViewModel: ObservableObject {
         return consolidatedLocations
     }
     
+    @MainActor
     func selectLocation(_ location: GeocodingModel) async {
         isLoading = true
         do {
@@ -69,8 +70,8 @@ class SearchViewModel: ObservableObject {
             )
             DispatchQueue.main.async {
                 self.currentWeather     = weather.current
-                self.hourlyWeather      = weather.hourly
-                self.dailyWeather       = weather.daily
+                self.hourlyWeather      = self.filterCurrentHours(hourlyWeather: Array(weather.hourly.prefix(25)))
+                self.dailyWeather       = self.filterDailyHours(dailyWeather: weather.daily)
                 self.selectedLocation   = location
                 self.isLoading          = false
             }
@@ -86,6 +87,24 @@ class SearchViewModel: ObservableObject {
         currentWeather = nil
         hourlyWeather = nil
         dailyWeather = nil
+    }
+    
+    private func filterCurrentHours(hourlyWeather: [Current]) -> [Current] {
+        let currentDate = Date()
+        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
+        
+        return hourlyWeather.filter { hourly in
+            return hourly.dt >= currentTimeStamp
+        }
+    }
+    
+    private func filterDailyHours(dailyWeather: [Daily]) -> [Daily] {
+        let currentDate = Date()
+        let currentTimeStamp = Int(currentDate.timeIntervalSince1970)
+        
+        return dailyWeather.filter { daily in
+            return daily.dt >= currentTimeStamp
+        }
     }
 }
 
