@@ -38,16 +38,6 @@ struct ThemeSwitcher: View {
             }
         }
         .frame(width: 84, height: 36)
-        .innerShadow(
-            shape: RoundedRectangle(cornerRadius: 12),
-            color: .black,
-            lineWidth: 0,
-            offsetX: 0,
-            offsetY: 0,
-            blur: 0,
-            blendMode: .color,
-            opacity: 2.8
-        )
         .onAppear {
             isDarkMode = colorScheme == .dark
         }

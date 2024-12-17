@@ -24,6 +24,7 @@ struct TabBarView: View {
                             .padding(.top, 40)
                         CustomTabBarButton()
                             .padding(EdgeInsets(top: 24, leading: 0, bottom: 0, trailing: 0))
+                            .shadow(color: .black, radius: 4, x: 4, y: 6)
                             .overlay {
                                 NavigationLink {
                                     SearchView()
@@ -44,6 +45,7 @@ struct TabBarView: View {
                         .font(.system(size: 26))
                         .padding(.bottom, 10)
                 }
+                .shadow(color: .black, radius: 2, x: 4, y: 4)
                 Spacer()
                 NavigationLink {
                     SettingsView(viewModel: viewmodel)
@@ -52,6 +54,7 @@ struct TabBarView: View {
                         .font(.system(size: 24))
                         .padding(.bottom, 8)
                 }
+                .shadow(color: .black, radius: 2, x: 4, y: 4)
             }
             .font(.title2)
             .padding(.horizontal, 24)

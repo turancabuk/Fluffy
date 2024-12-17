@@ -8,10 +8,19 @@
 import SwiftUI
 
 struct ForecastCardView: View {
+    
     @StateObject private var viewmodel = ContentViewModel.shared
+    @StateObject private var locationManager = LocationManager.shared
     var forecastPeriod: ForecastPeriod
     var currentWeather: Current?
     var dailyWeather: Daily?
+
+    // 24 saat formatı için formatter
+    private let hourFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"  // HH: 24 saat formatı (00-23)
+        return formatter
+    }()
 
     var isActive: Bool {
         if forecastPeriod == .hourly, let currentWeather = currentWeather {
@@ -46,7 +55,7 @@ struct ForecastCardView: View {
 
             VStack(spacing: 16) {
                 if forecastPeriod == .hourly, let currentWeather = currentWeather {
-                    Text("\(currentWeather.date, format: .dateTime.hour())")
+                    Text(hourFormatter.string(from: currentWeather.date))
                         .font(.title3)
                     VStack(spacing: -4) {
                         Image("\(currentWeather.weather.first?.icon ?? "")")

@@ -10,8 +10,9 @@ import SwiftUI
 @main
 struct FluffyApp: App {
     let persistenceController = PersistenceController.shared
-    @StateObject var locationManager   = LocationManager()
+    @StateObject var locationManager = LocationManager()
     @AppStorage("hasLaunchedBefore") private var hasLaunchedBefore = false
+    @StateObject private var languageManager = LanguageManager.shared
     
     var body: some Scene {
         WindowGroup {
@@ -25,6 +26,7 @@ struct FluffyApp: App {
                 }
                 .environmentObject(locationManager)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.locale, languageManager.locale)
         }
     }
 }

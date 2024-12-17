@@ -105,8 +105,6 @@ struct CustomTabBarButton: View {
                 ))
                 .frame(width: 72, height: 72)
                 .padding(.vertical, -52)
-                .shadow(color: Color.black.opacity(0.8), radius: 12, x: 12, y: 12)
-                .shadow(color: Color.white.opacity(0.05), radius: 12, x: -2, y: -2)
                 .overlay {
                     TabBarCircle()
                         .stroke(.black, lineWidth: 2)

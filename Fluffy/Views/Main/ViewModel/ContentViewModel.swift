@@ -13,7 +13,7 @@ class ContentViewModel: ObservableObject {
     
     static let shared = ContentViewModel(locationManager: LocationManager.shared)
     @ObservedObject var locationManager   : LocationManager
-    @Published var cityLocation           : String = "Mevcut Konum"
+    @Published var cityLocation           : String = "Current Location"
     @Published var currentWeather         : Current? = nil
     @Published var hourlyWeather          : [Current]? = nil
     @Published var dailyWeather           : [Daily]? = nil

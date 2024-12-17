@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		5C1C94552CC8202F00E78578 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 5C1C94542CC8202F00E78578 /* BottomSheet */; };
+		5C7127FC2D1191EC005677DA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5C7127FB2D1191EC005677DA /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C7127FB2D1191EC005677DA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		5C951C4D2CC788CD00E025A0 /* Fluffy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fluffy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -50,6 +52,7 @@
 		5C951C442CC788CD00E025A0 = {
 			isa = PBXGroup;
 			children = (
+				5C7127FB2D1191EC005677DA /* Localizable.xcstrings */,
 				5C951C4F2CC788CD00E025A0 /* Fluffy */,
 				5C951C4E2CC788CD00E025A0 /* Products */,
 			);
@@ -110,6 +113,8 @@
 			knownRegions = (
 				en,
 				Base,
+				tr,
+				de,
 			);
 			mainGroup = 5C951C442CC788CD00E025A0;
 			minimizedProjectReferenceProxies = 1;
@@ -131,6 +136,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C7127FC2D1191EC005677DA /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +216,7 @@
 				);
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -270,6 +277,7 @@
 				);
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -42,12 +42,13 @@ struct ContentView: View {
                                 .scaledToFit()
                                 .ignoresSafeArea()
                                 .offset(y: -bottomSheetTranslationProrated * imageOffset)
-                                .padding(.leading, -68)
+                                .padding(.leading, -58)
                             
                             // MARK: Current Weather
                             VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
                                 ThemeSwitcher()
-                                    .padding(EdgeInsets(top: -40, leading: 280, bottom: 0, trailing: 0))
+                                    .padding(EdgeInsets(top: -40, leading: 270, bottom: 0, trailing: 0))
+                                    .offset(y: -bottomSheetTranslationProrated * imageOffset)
                                 Text("\(viewmodel.cityLocation)")
                                     .font(.largeTitle)
                                     .foregroundStyle(hasDragged ? .primary : Color.black.opacity(0.6))
@@ -107,15 +108,15 @@ struct ContentView: View {
                 }
             }
         }
-        .alert("Konum İzni Gerekli", isPresented: $viewmodel.showLocationAlert) {
-            Button("Ayarlara Git") {
+        .alert("Location Permission Required", isPresented: $viewmodel.showLocationAlert) {
+            Button("Go to Settings") {
                  if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
             }
-            Button("İptal", role: .cancel) {}
+            Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Hava durumu bilgilerini görüntüleyebilmek için konum iznine ihtiyacımız var.")
+            Text("We need location permission to display weather information.")
         }
         .task {
             await viewmodel.getWeather()
@@ -160,5 +161,11 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .preferredColorScheme(.dark)
+        .environment(\.locale, Locale(identifier: "EN"))
 }
 
+#Preview {
+    ContentView()
+        .preferredColorScheme(.dark)
+        .environment(\.locale, Locale(identifier: "TR"))
+}

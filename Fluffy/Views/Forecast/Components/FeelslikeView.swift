@@ -18,8 +18,8 @@ struct FeelslikeView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Image(systemName: "thermometer.variable.and.figure")
-                    .font(.system(size: 22))
+                Text("feelslike")
+                    .font(.system(size: 20))
                 Spacer()
                 Text(locationManager.formattedTemperature(temp: feelsLike ?? 0))
                     .font(.system(size: 38))
