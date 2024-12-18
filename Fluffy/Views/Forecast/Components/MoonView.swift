@@ -29,7 +29,7 @@ struct MoonView: View {
                     HStack(spacing: 12) {
                         Image(systemName: "moonrise.fill")
                         if let timeFormatter {
-                            Text("moonrise: \(moonrise.map {timeFormatter.string(from: $0)} ?? "HH:mm")")
+                            Text("moonrise : \(moonrise.map {timeFormatter.string(from: $0)} ?? "HH:mm")")
                         }
                     }
                     Divider()
@@ -37,7 +37,7 @@ struct MoonView: View {
                     HStack(spacing: 12) {
                         Image(systemName: "moonset.fill")
                         if let timeFormatter {
-                            Text("moonset: \(moonset.map {timeFormatter.string(from: $0)} ?? "HH:mm")")
+                            Text("moonset  : \(moonset.map {timeFormatter.string(from: $0)} ?? "HH:mm")")
                         }
                     }
                     Divider()

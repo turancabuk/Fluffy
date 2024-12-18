@@ -9,6 +9,12 @@
             "value" : " | "
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " | "
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20,6 +26,12 @@
     "%@" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -41,6 +53,12 @@
             "value" : "%%%lld"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%%%lld"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52,6 +70,12 @@
     "%lld" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -73,6 +97,12 @@
             "value" : "%lld m"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld m"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,6 +119,12 @@
             "value" : "Alle Temperaturwerte werden automatisch in die gewählte Temperatureinheit umgerechnet."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All temperature values ​​will be converted automatically according to the selected temperature unit."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,13 +137,19 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "İptal"
           }
         }
@@ -119,6 +161,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Celsius (°C)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centigrade (°C)"
           }
         },
         "tr" : {
@@ -137,6 +185,12 @@
             "value" : "Tägliche Wetterübersicht"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daily Weather Summary"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -145,28 +199,53 @@
         }
       }
     },
-    "degree:  %lld" : {
+    "degree : %lld" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grad:  %lld"
+            "value" : "grad : %lld"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "derece: %lld"
+            "value" : "derece : %lld "
           }
         }
       }
     },
     "Deutsch" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deutsch"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deutsch"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deutsch"
+          }
+        }
+      }
     },
     "E" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "E"
@@ -185,7 +264,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Englisch"
+            "value" : "English"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English"
           }
         },
         "tr" : {
@@ -196,18 +281,18 @@
         }
       }
     },
-    "evening:  %@" : {
+    "evening  : %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "abend:  %@"
+            "value" : "abend    : %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "akşam: %@"
+            "value" : "akşam   : %@"
           }
         }
       }
@@ -215,6 +300,12 @@
     "Fahrenheit (°F)" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fahrenheit (°F)"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fahrenheit (°F)"
@@ -236,6 +327,12 @@
             "value" : "gefühlte temperatur"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "feelslike"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -252,6 +349,12 @@
             "value" : "Gehe zu den Einstellungen"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to Settings"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -260,18 +363,18 @@
         }
       }
     },
-    "gust:      %@ km/h" : {
+    "gust      : %@ km/h" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "böe %@ km/h"
+            "value" : "böe  : %@ km/h"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "etki: %@ km/s"
+            "value" : "etki       : %@ km/h"
           }
         }
       }
@@ -282,6 +385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stündliche Vorhersage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hourly Forecast"
           }
         },
         "tr" : {
@@ -295,6 +404,12 @@
     "hPa" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hPa"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "hPa"
@@ -316,6 +431,12 @@
             "value" : "luftfeuchtigkeit"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "humidity"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -330,6 +451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sprache"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
           }
         },
         "tr" : {
@@ -348,6 +475,12 @@
             "value" : "Standortberechtigung erforderlich"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Location Permission Required"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -364,6 +497,12 @@
             "value" : "mondphasen"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "moon phases"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -372,50 +511,50 @@
         }
       }
     },
-    "moonrise: %@" : {
+    "moonrise : %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "mondaufgang: %@"
+            "value" : "mondaufgang  : %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aydoğumu: %@"
+            "value" : "aydoğumu  : %@"
           }
         }
       }
     },
-    "moonset: %@" : {
+    "moonset  : %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "monduntergang: %@"
+            "value" : "monduntergang : % @"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aybatımı: %@"
+            "value" : "aybatımı      : %@"
           }
         }
       }
     },
-    "morning: %@" : {
+    "morning : %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "morgen: %@"
+            "value" : "morgen : %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sabah: %@"
+            "value" : "sabah    : %@"
           }
         }
       }
@@ -428,6 +567,12 @@
             "value" : "N"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -436,18 +581,18 @@
         }
       }
     },
-    "night:       %@" : {
+    "night       : %@" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nacht: %@"
+            "value" : "nacht     : %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "gece:  %@"
+            "value" : "gece      : %@"
           }
         }
       }
@@ -458,6 +603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benachrichtigungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
           }
         },
         "tr" : {
@@ -476,6 +627,12 @@
             "value" : "druck"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pressure"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,6 +644,12 @@
     "S" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "S"
@@ -505,7 +668,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Suche nach einer Stadt oder einem Flughafen"
+            "value" : "Suchen Sie nach einer Stadt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search a city or airport"
           }
         },
         "tr" : {
@@ -524,6 +693,12 @@
             "value" : "Sıcaklık Birimi"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıcaklık Birimi"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -532,18 +707,18 @@
         }
       }
     },
-    "speed:   %@ km/h" : {
+    "speed   : %@ km/h" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "geschwindigkeit: %@ km/h"
+            "value" : "geschwindigkeit :         %@ km/h"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "hız:   %@ km/s"
+            "value" : "hız        : %@"
           }
         }
       }
@@ -553,7 +728,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sonnenaufgang"
+            "value" : " "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sunrise"
           }
         },
         "tr" : {
@@ -569,7 +750,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sonnenuntergang"
+            "value" : " "
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sunset"
           }
         },
         "tr" : {
@@ -588,6 +775,12 @@
             "value" : "Temperatureinheit"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperature Unit"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -599,6 +792,12 @@
     "Türkçe" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Türkçe"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Türkçe"
@@ -620,6 +819,12 @@
             "value" : "sichtweite"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "visibility"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -631,6 +836,12 @@
     "W" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "W"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "W"
@@ -652,6 +863,12 @@
             "value" : "Wir benötigen die Standortberechtigung, um Wetterinformationen anzuzeigen."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We need location permission to display weather information."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -666,6 +883,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wetter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather"
           }
         },
         "tr" : {
@@ -684,6 +907,12 @@
             "value" : "Wöchentliche Vorhersage"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weekly Forecast"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -695,6 +924,12 @@
     "wind" : {
       "localizations" : {
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wind"
+          }
+        },
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "wind"
@@ -716,6 +951,12 @@
             "value" : "Sie müssen die Benachrichtigungen aktivieren, um jeden Tag um 08:00 Uhr eine Wetterübersicht zu erhalten."
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You must turn on notifications to receive a weather summary every day at 08:00."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -730,6 +971,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sie erhalten jeden Tag um 08:00 Uhr eine Wetterübersicht."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You will receive a weather summary every day at 08:00."
           }
         },
         "tr" : {

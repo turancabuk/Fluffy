@@ -23,13 +23,13 @@ struct WindView: View {
             Spacer()
             HStack(spacing: 14) {
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("speed:   \(String(format: "%.2f", windSpeed ?? 0)) km/h")
+                    Text("speed   : \(String(format: "%.2f", windSpeed ?? 0)) km/h")
                     Divider()
                         .background(Color.gray)
-                    Text("gust:      \(String(format: "%.2f", windGust ?? 0)) km/h")
+                    Text("gust      : \(String(format: "%.2f", windGust ?? 0)) km/h")
                     Divider()
                         .background(Color.gray)
-                    Text("degree:  \(windDeg ?? 0)")
+                    Text("degree : \(windDeg ?? 0)")
                 }
                 .foregroundStyle(.primary.opacity(0.6))
                 Spacer()

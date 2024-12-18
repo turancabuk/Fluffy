@@ -28,15 +28,15 @@ struct FeelslikeView: View {
             Spacer()
             HStack(spacing: 4) {
                 VStack(alignment: .leading) {
-                    Text("morning: \(locationManager.formattedTemperature(temp: morning ?? 0))")
+                    Text("morning : \(locationManager.formattedTemperature(temp: morning ?? 0))")
                         .foregroundStyle(.primary.opacity(0.6))
                     Divider()
                         .background(.gray)
-                    Text("evening:  \(locationManager.formattedTemperature(temp: evening ?? 0))")
+                    Text("evening  : \(locationManager.formattedTemperature(temp: evening ?? 0))")
                         .foregroundStyle(.primary.opacity(0.6))
                     Divider()
                         .background(.gray)
-                    Text("night:       \(locationManager.formattedTemperature(temp: night ?? 0))")
+                    Text("night       : \(locationManager.formattedTemperature(temp: night ?? 0))")
                         .foregroundStyle(.primary.opacity(0.6))
                 }
             }

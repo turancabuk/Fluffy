@@ -1,29 +1,45 @@
+//
+//  LanguageManager.swift
+//  Fluffy
+//
+//  Created by Turan Çabuk on 17.12.2024.
+//
+
 import Foundation
 import SwiftUI
 
 class LanguageManager: ObservableObject {
-    
     static let shared = LanguageManager()
     
     @Published private(set) var locale: Locale
-    @AppStorage("app_language") var currentLanguage: String = "en" {
-        willSet {
+    @AppStorage("app_language") private var storedLanguage: String = ""
+    
+    var currentLanguage: String {
+        get { storedLanguage }
+        set {
+            storedLanguage = newValue
             locale = Locale(identifier: newValue)
-        }
-        didSet {
             NotificationCenter.default.post(name: Notification.Name("LANGUAGE_CHANGED"), object: nil)
         }
     }
     
     private init() {
-        // Başlangıç locale'ini ayarla
+        // Önce locale'i varsayılan değerle başlat
         self.locale = Locale(identifier: "en")
         
-        // Sistem dilini kontrol et
-        if let systemLanguage = Locale.current.language.languageCode?.identifier {
-            if ["tr", "de"].contains(systemLanguage) && UserDefaults.standard.string(forKey: "app_language") == nil {
-                self.currentLanguage = systemLanguage
-            }
+        // Sistem dilini al
+        let systemLanguage = Locale.current.language.languageCode?.identifier ?? "en"
+        let supportedLanguages = ["en", "tr", "de"]
+        
+        // Başlangıç dilini belirle
+        if storedLanguage.isEmpty {
+            // Eğer daha önce bir dil seçilmemişse, sistem dilini kontrol et
+            let initialLanguage = supportedLanguages.contains(systemLanguage) ? systemLanguage : "en"
+            storedLanguage = initialLanguage
+            locale = Locale(identifier: initialLanguage)
+        } else {
+            // Daha önce seçilmiş dili kullan
+            locale = Locale(identifier: storedLanguage)
         }
     }
     
