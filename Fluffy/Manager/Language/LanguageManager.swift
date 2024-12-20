@@ -29,7 +29,7 @@ class LanguageManager: ObservableObject {
         
         // Sistem dilini al
         let systemLanguage = Locale.current.language.languageCode?.identifier ?? "en"
-        let supportedLanguages = ["en", "tr", "de"]
+        let supportedLanguages = ["en", "tr", "de", "ru", "es", "it"]
         
         // Başlangıç dilini belirle
         if storedLanguage.isEmpty {
@@ -48,12 +48,18 @@ class LanguageManager: ObservableObject {
         case english = "en"
         case turkish = "tr"
         case german = "de"
+        case russian = "ru"
+        case spnish = "es"
+        case italian = "it"
         
         var displayName: LocalizedStringKey {
             switch self {
             case .english: return "English"
             case .turkish: return "Türkçe"
             case .german: return "Deutsch"
+            case .russian: return "Русский"
+            case .spnish: return "Español"
+            case .italian : return "Italiano"
             }
         }
     }

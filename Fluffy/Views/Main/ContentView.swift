@@ -78,6 +78,20 @@ struct ContentView: View {
                                         .opacity(1 - bottomSheetTranslationProrated)
                                         .foregroundStyle(.black.opacity(0.6))
                                     }
+                                    HStack(spacing: 8) {
+                                        Image("umbrella")
+                                            .resizable()
+                                            .frame(width: 48, height: 48)
+                                            .cornerRadius(.infinity)
+                                        Image("cream")
+                                            .resizable()
+                                            .frame(width: 48, height: 48)
+                                            .cornerRadius(.infinity)
+                                        Image("gloves")
+                                            .resizable()
+                                            .frame(width: 48, height: 48)
+                                            .cornerRadius(.infinity)
+                                    }
                                 }
                                 Spacer()
                             }
