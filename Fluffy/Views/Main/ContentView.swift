@@ -34,21 +34,21 @@ struct ContentView: View {
                 }else{
                     GeometryReader { geometry in
                         let screenHeight = geometry.size.height + geometry.safeAreaInsets.top + geometry.safeAreaInsets.bottom
-                        let imageOffset = screenHeight + 36
+                        let imageOffset = screenHeight + 96
                         ZStack {
                             Image("House")
                                 .resizable()
-                                .frame(width: 500)
-                                .scaledToFit()
+                                .scaledToFill()
                                 .ignoresSafeArea()
                                 .offset(y: -bottomSheetTranslationProrated * imageOffset)
-                                .padding(.leading, -58)
-                            
                             // MARK: Current Weather
                             VStack(alignment: .center, spacing: -10 * (1 - bottomSheetTranslationProrated)) {
-                                ThemeSwitcher()
-                                    .padding(EdgeInsets(top: -40, leading: 270, bottom: 0, trailing: 0))
-                                    .offset(y: -bottomSheetTranslationProrated * imageOffset)
+                                HStack {
+                                    Spacer()
+                                    ThemeSwitcher()
+                                        .padding(.trailing, 4)
+                                        .offset(y: -bottomSheetTranslationProrated * imageOffset)
+                                }
                                 Text("\(viewmodel.cityLocation)")
                                     .font(.largeTitle)
                                     .foregroundStyle(hasDragged ? .primary : Color.black.opacity(0.6))
@@ -78,25 +78,33 @@ struct ContentView: View {
                                         .opacity(1 - bottomSheetTranslationProrated)
                                         .foregroundStyle(.black.opacity(0.6))
                                     }
-                                    HStack(spacing: 8) {
-                                        Image("umbrella")
-                                            .resizable()
-                                            .frame(width: 48, height: 48)
-                                            .cornerRadius(.infinity)
-                                        Image("cream")
-                                            .resizable()
-                                            .frame(width: 48, height: 48)
-                                            .cornerRadius(.infinity)
-                                        Image("gloves")
-                                            .resizable()
-                                            .frame(width: 48, height: 48)
-                                            .cornerRadius(.infinity)
+                                    if viewmodel.showUmbrella || viewmodel.showGloves || viewmodel.showSunscreen {
+                                        HStack(spacing: 8) {
+                                            if viewmodel.showUmbrella {
+                                                Image("umbrella")
+                                                    .resizable()
+                                                    .frame(width: 48, height: 48)
+                                                    .cornerRadius(.infinity)
+                                                    .shadow(color: .color1, radius: 2)
+                                            }
+                                            if viewmodel.showGloves {
+                                                Image("gloves")
+                                                    .resizable()
+                                                    .frame(width: 48, height: 48)
+                                                    .cornerRadius(.infinity)
+                                            }
+                                            if viewmodel.showSunscreen {
+                                                Image("cream")
+                                                    .resizable()
+                                                    .frame(width: 48, height: 48)
+                                                    .cornerRadius(.infinity)
+                                            }
+                                        }
                                     }
                                 }
                                 Spacer()
                             }
-                            .padding(.top, 51)
-                            .padding(.leading, hasDragged ? -68 : 0)
+                            .padding(.top, 21)
                             .offset(y: -bottomSheetTranslationProrated * 46)
                         }
 
@@ -183,3 +191,12 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
         .environment(\.locale, Locale(identifier: "TR"))
 }
+//import UIKit
+//
+//extension UIDevice {
+//    static var isSmallDevice: Bool {
+//        let screenWidth = UIScreen.main.bounds.width
+//        return screenWidth <= 375 // iPhone SE, iPhone 8 ve daha küçük cihazlar
+//    }
+//}
+

@@ -22,6 +22,9 @@ class ContentViewModel: ObservableObject {
     private var cancellables              = Set<AnyCancellable>()
     private var hasFetchedWeather         = false
     @AppStorage("notificationsEnabled") var notificationsEnabled = false
+    @Published var showUmbrella: Bool = false
+    @Published var showGloves: Bool = false
+    @Published var showSunscreen: Bool = false
     
     init(locationManager: LocationManager) {
         self.locationManager = locationManager
@@ -52,6 +55,10 @@ class ContentViewModel: ObservableObject {
             self.hourlyWeather  = filterCurrentHours(hourlyWeather: Array(weather.hourly.prefix(25)))
             self.dailyWeather   = filterDailyHours(dailyWeather: weather.daily)
             hideLoadingView()
+            
+            // Hava durumu kontrollerini yap
+            checkWeatherConditions()
+            
             print("***getWeather")
             
             // Bildirim aktifse güncelle
@@ -140,5 +147,14 @@ class ContentViewModel: ObservableObject {
     
     func formatTemperature(_ temperature: Double) -> String {
         return locationManager.formattedTemperature(temp: temperature)
+    }
+    
+    private func checkWeatherConditions() {
+        guard let hourlyWeather = hourlyWeather,
+              let nextHour = hourlyWeather.dropFirst().first else { return }
+        
+        showUmbrella = nextHour.needsUmbrella
+        showGloves = nextHour.needsGloves
+        showSunscreen = nextHour.needsSunscreen
     }
 }

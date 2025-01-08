@@ -25,7 +25,7 @@ struct VisibilityView: View {
             Spacer()
         }
         .padding()
-        .widgetStyleSubviews(width: 190)
+        .widgetStyleSubviews(width: UIScreen.main.bounds.width/2.15)
     }
 }
 

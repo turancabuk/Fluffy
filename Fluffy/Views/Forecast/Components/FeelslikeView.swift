@@ -44,7 +44,7 @@ struct FeelslikeView: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical)
-        .widgetStyleSubviews(width: 190)
+        .widgetStyleSubviews(width: UIScreen.main.bounds.width/2.15)
     }
 }
 

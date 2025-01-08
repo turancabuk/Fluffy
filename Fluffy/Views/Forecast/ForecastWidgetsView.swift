@@ -39,7 +39,7 @@ struct ForecastWidgetsView: View {
             HStack {
                 SummaryView(summary: summary)
             }
-            HStack {
+            HStack(alignment: .center) {
                 FeelslikeView(feelsLike: feelsLike, morning: morning, evening: evening, night: night)
                 HumidityView(humidity: humidity)
             }

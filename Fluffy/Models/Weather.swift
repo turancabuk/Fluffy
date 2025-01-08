@@ -83,6 +83,20 @@ struct Current: Codable, Identifiable {
         case windGust = "wind_gust"
         case weather, pop
     }
+
+    var needsUmbrella: Bool {
+        guard let weatherDesc = weather.first?.description.lowercased() else { return false }
+        return weatherDesc.contains("rain") || weatherDesc.contains("shower")
+    }
+    
+    var needsGloves: Bool {
+        guard let weatherDesc = weather.first?.description.lowercased() else { return false }
+        return weatherDesc.contains("snow")
+    }
+    
+    var needsSunscreen: Bool {
+        return temp >= 25 // 25°C ve üzeri için güneş kremi önerisi
+    }
 }
 
 // MARK: - Weather

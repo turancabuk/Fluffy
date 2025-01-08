@@ -16,13 +16,13 @@ struct MoonView: View {
     var timeFormatter : DateFormatter?
     
     var body: some View {
-        VStack(spacing: -6) {
+        VStack {
             HStack(spacing: 8) {
                 Image(systemName: "moon.stars.fill")
                 Text("moon phases")
             }
-            .padding(.top, 24)
-            .padding(.horizontal, 14)
+            .padding(.horizontal, 18)
+            .padding(.top, 14)
             .frame(maxWidth: .infinity, alignment: .leading)
             HStack(spacing: 8) {
                 VStack(alignment: .leading) {
@@ -56,13 +56,14 @@ struct MoonView: View {
                     if let phaseType = moonPhaseType {
                         Image(phaseType.imageName)
                             .resizable()
-                            .frame(width: 150, height: 150)
+                            .frame(width: UIScreen.main.bounds.width/3.1, height: UIScreen.main.bounds.height/6)
                             .scaledToFill()
                     }
                 }
             }
             .foregroundStyle(.primary.opacity(0.6))
         }
+        .frame(height: UIScreen.main.bounds.height/4.5)
         .widgetStyleSubviews()
         .padding(.horizontal, 8)
     }
